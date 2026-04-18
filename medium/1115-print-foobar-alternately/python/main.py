@@ -1,23 +1,21 @@
 import asyncio
 from foobar import FooBar
+from typing import Callable
 
 
-async def foo(f: FooBar):
-    while True:
+def printer(m: str) -> Callable:
+    def c() -> None:
+        print(m, end="")
 
-        def pf():
-            print("foo")
-
-        await f.foo(pf)
+    return c
 
 
-async def bar(f: FooBar):
-    while True:
+async def foo(f: FooBar) -> None:
+    await f.foo(printer("foo"))
 
-        def pb():
-            print("bar")
 
-        await f.foo(pb)
+async def bar(f: FooBar) -> None:
+    await f.bar(printer("bar"))
 
 
 async def main():
