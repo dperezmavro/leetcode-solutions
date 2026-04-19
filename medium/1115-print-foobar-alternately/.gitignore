@@ -1,0 +1,4 @@
+bazel-bin
+bazel-out
+bazel-testlogs
+bazel-1115-print-foobar-alternately

@@ -1,0 +1,19 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+load("@pip//:requirements.bzl", "requirement")
+
+py_library(
+    name = "foobar_lib",
+    srcs = ["foobar.py"],
+    visibility = ["//visibility:private"],
+)
+
+py_test(
+    name = "foobar_test",
+    srcs = ["foobar_test.py"],
+    main = "foobar_test.py",
+    deps = [
+        ":foobar_lib",
+        requirement("pytest"),
+        requirement("pytest-asyncio"),
+    ],
+)
