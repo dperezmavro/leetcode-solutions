@@ -51,3 +51,7 @@ async def test_add(n, expected):
 
     # print(f"output: {captured_text}")
     assert captured_text == expected
+
+
+if __name__ == "__main__":
+    raise SystemExit(pytest.main([__file__]))
