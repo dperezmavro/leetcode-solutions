@@ -19,6 +19,7 @@ fn test_largest_altitude() {
         },
     ];
     for t in tests {
-        assert_eq!(t.result, solution::Solution::largest_altitude(t.input));
+        let got = solution::Solution::largest_altitude(t.input);
+        assert_eq!(t.result, got);
     }
 }
