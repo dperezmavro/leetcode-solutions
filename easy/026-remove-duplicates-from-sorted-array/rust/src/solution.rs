@@ -3,6 +3,7 @@ pub struct Solution {}
 impl Solution {
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
         let mut k: usize = 0;
+        // TODO: this clone looks wrong
         for (i, val) in nums.clone().iter().enumerate() {
             if i == 0 {
                 k += 1;
