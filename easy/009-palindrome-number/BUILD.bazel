@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "palindrome_number_lib",
+    srcs = ["package palindrome_number.go"],
+    importpath = "palindrome-number",
+    visibility = ["//visibility:private"],
+)
+
+go_test(
+    name = "palindrome_number_test",
+    srcs = ["package palindrome_number_test.go"],
+    embed = [":palindrome_number_lib"],
+)

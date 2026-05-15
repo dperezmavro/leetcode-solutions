@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "find_all_anagrams_lib",
+    srcs = ["main.go"],
+    importpath = "find-all-anagrams-in-a-string",
+    visibility = ["//visibility:private"],
+)
+
+go_test(
+    name = "find_all_anagrams_test",
+    srcs = ["main_test.go"],
+    embed = [":find_all_anagrams_lib"],
+)
