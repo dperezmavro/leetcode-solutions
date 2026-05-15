@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestMain(t *testing.T) {
+func TestCode(t *testing.T) {
 
 	tests := []struct {
 		n    int
