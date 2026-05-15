@@ -2,7 +2,7 @@ package valid_anagram
 
 import "testing"
 
-func TestMain(t *testing.T) {
+func TestIsAnagram(t *testing.T) {
 	tests := []struct {
 		s   string
 		t   string
