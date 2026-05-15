@@ -1,12 +1,1 @@
-# The python solution in 1115 uses pip dependencies that belong to its own
-# standalone workspace. Exclude it so `bazel test //...` from the root only
-# covers the Go solutions managed by this workspace.
-medium/1115-print-foobar-alternately/python
-
-# Bazel output symlinks created by the standalone 1115 workspace. Bazel would
-# otherwise follow them and find the python BUILD file again via the execroot.
-medium/1115-print-foobar-alternately/bazel-1115-print-foobar-alternately
-medium/1115-print-foobar-alternately/bazel-bin
-medium/1115-print-foobar-alternately/bazel-out
-medium/1115-print-foobar-alternately/bazel-testlogs
 .claude/
