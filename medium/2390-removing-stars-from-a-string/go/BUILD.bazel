@@ -2,13 +2,13 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "removing_stars_lib",
-    srcs = ["main.go"],
+    srcs = ["solution.go"],
     importpath = "removing-stars-from-a-string",
     visibility = ["//visibility:private"],
 )
 
 go_test(
     name = "removing_stars_test",
-    srcs = ["main_test.go"],
+    srcs = ["solution_test.go"],
     embed = [":removing_stars_lib"],
 )
