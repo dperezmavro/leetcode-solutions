@@ -27,3 +27,7 @@ setup:
 tidy:
 	bazel mod tidy
 	bazel run //:gazelle
+
+# Show all test targets without running them.
+list-tests:
+	bazel query 'kind("go_test", //...)'

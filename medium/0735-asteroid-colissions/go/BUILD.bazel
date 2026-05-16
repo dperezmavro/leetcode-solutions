@@ -6,7 +6,7 @@ go_library(
         "solution.go",
         "stack.go",
     ],
-    importpath = "github.com/dperezmavro/leetcode/medium/735-asteroid-colissions/go",
+    importpath = "github.com/dperezmavro/leetcode/medium/0735-asteroid-colissions/go",
     visibility = ["//visibility:public"],
 )
 
@@ -14,5 +14,5 @@ go_test(
     name = "go_test",
     srcs = ["solution_test.go"],
     embed = [":go"],
-    deps = ["@com_github_stretchr_testify//assert:go_default_library"],
+    deps = ["@com_github_stretchr_testify//assert"],
 )
