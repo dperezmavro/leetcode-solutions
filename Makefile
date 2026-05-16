@@ -22,3 +22,8 @@ test-problem:
 # Run this whenever you add a new bazel_dep or change a dep version.
 setup:
 	bazel mod deps
+	make tidy
+
+tidy:
+	bazel mod tidy
+	bazel run //:gazelle
