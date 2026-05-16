@@ -1,25 +1,8 @@
-package main
+package kth_largest_element
 
 import (
 	"container/heap"
-	"fmt"
 )
-
-func main() {
-	kthLargest := Constructor(3, []int{4, 5, 8, 2})
-	fmt.Println(kthLargest.Add(3))  // return 4
-	fmt.Println(kthLargest.Add(5))  // return 5
-	fmt.Println(kthLargest.Add(10)) // return 5
-	fmt.Println(kthLargest.Add(9))  // return 8
-	fmt.Println(kthLargest.Add(4))  // return 8
-
-	fmt.Println()
-	kthLargest = Constructor(4, []int{7, 7, 7, 7, 8, 3})
-	fmt.Println(kthLargest.Add(2))
-	fmt.Println(kthLargest.Add(10))
-	fmt.Println(kthLargest.Add(9))
-	fmt.Println(kthLargest.Add(9))
-}
 
 type KthLargest struct {
 	k       int
@@ -41,13 +24,13 @@ func Constructor(k int, nums []int) KthLargest {
 	return kth
 }
 
-func (this *KthLargest) Add(val int) int {
-	heap.Push(this.minHeap, val)
+func (k *KthLargest) Add(val int) int {
+	heap.Push(k.minHeap, val)
 
-	if this.minHeap.Len() > this.k {
-		heap.Pop(this.minHeap)
+	if k.minHeap.Len() > k.k {
+		heap.Pop(k.minHeap)
 	}
-	return (*this.minHeap)[0]
+	return (*k.minHeap)[0]
 }
 
 type MinHeap []int

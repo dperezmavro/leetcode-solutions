@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go",
+    srcs = ["remove_duplicates.go"],
+    importpath = "github.com/dperezmavro/leetcode/easy/026-remove-duplicates-from-sorted-array/go",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_test",
+    srcs = ["remove_duplicates_test.go"],
+    embed = [":go"],
+)

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestRomanToInt(t *testing.T) {
+func TestRemoveDuplicates(t *testing.T) {
 	tests := []struct {
 		input  []int
 		output int

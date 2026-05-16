@@ -1,7 +1,7 @@
 load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
 
 go_binary(
-    name = "go",
+    name = "solution",
     embed = [":go_lib"],
     visibility = ["//visibility:public"],
 )
@@ -9,7 +9,7 @@ go_binary(
 go_library(
     name = "go_lib",
     srcs = ["main.go"],
-    importpath = "github.com/dperezmavro/leetcode/medium/1115-print-foobar-alternately/go",
+    importpath = "github.com/dperezmavro/leetcode/medium/0002-add-two-numbers/go",
     visibility = ["//visibility:private"],
 )
 

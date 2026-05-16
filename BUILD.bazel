@@ -1,4 +1,4 @@
 load("@gazelle//:def.bzl", "gazelle")
 
-# gazelle:prefix ://github.com
+# gazelle:prefix github.com/dperezmavro/leetcode
 gazelle(name = "gazelle")
