@@ -12,3 +12,16 @@ go_test(
     srcs = ["main_test.go"],
     embed = [":romantoint_lib"],
 )
+
+go_library(
+    name = "go",
+    srcs = ["main.go"],
+    importpath = "github.com/dperezmavro/leetcode/easy/013-roman-to-integer/go",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_test",
+    srcs = ["main_test.go"],
+    embed = [":go"],
+)

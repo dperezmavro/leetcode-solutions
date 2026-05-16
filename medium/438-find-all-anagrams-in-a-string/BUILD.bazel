@@ -12,3 +12,16 @@ go_test(
     srcs = ["main_test.go"],
     embed = [":find_all_anagrams_lib"],
 )
+
+go_library(
+    name = "438-find-all-anagrams-in-a-string",
+    srcs = ["main.go"],
+    importpath = "github.com/dperezmavro/leetcode/medium/438-find-all-anagrams-in-a-string",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "438-find-all-anagrams-in-a-string_test",
+    srcs = ["main_test.go"],
+    embed = [":438-find-all-anagrams-in-a-string"],
+)

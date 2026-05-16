@@ -2,19 +2,19 @@ load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
 
 go_binary(
     name = "solution",
-    embed = [":go_lib"],
+    embed = [":2-add-two-numbers_lib"],
     visibility = ["//visibility:public"],
 )
 
 go_library(
-    name = "go_lib",
+    name = "2-add-two-numbers_lib",
     srcs = ["main.go"],
-    importpath = "leetcode",
+    importpath = "github.com/dperezmavro/leetcode/medium/2-add-two-numbers",
     visibility = ["//visibility:private"],
 )
 
 go_test(
-    name = "go_test",
+    name = "2-add-two-numbers_test",
     srcs = ["main_test.go"],
-    embed = [":go_lib"],
+    embed = [":2-add-two-numbers_lib"],
 )
