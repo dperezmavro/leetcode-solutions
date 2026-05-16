@@ -1,25 +1,8 @@
-package main
+package kth_largest_element
 
 import (
 	"container/heap"
-	"fmt"
 )
-
-func main() {
-	kthLargest := Constructor(3, []int{4, 5, 8, 2})
-	fmt.Println(kthLargest.Add(3))  // return 4
-	fmt.Println(kthLargest.Add(5))  // return 5
-	fmt.Println(kthLargest.Add(10)) // return 5
-	fmt.Println(kthLargest.Add(9))  // return 8
-	fmt.Println(kthLargest.Add(4))  // return 8
-
-	fmt.Println()
-	kthLargest = Constructor(4, []int{7, 7, 7, 7, 8, 3})
-	fmt.Println(kthLargest.Add(2))
-	fmt.Println(kthLargest.Add(10))
-	fmt.Println(kthLargest.Add(9))
-	fmt.Println(kthLargest.Add(9))
-}
 
 type KthLargest struct {
 	k       int
