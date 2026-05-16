@@ -1,19 +1,6 @@
 load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "valid_anagram_lib",
-    srcs = ["valid_anagram.go"],
-    importpath = "valid-anagram",
-    visibility = ["//visibility:private"],
-)
-
-go_test(
-    name = "valid_anagram_test",
-    srcs = ["valid_anagram_test.go"],
-    embed = [":valid_anagram_lib"],
-)
-
-go_library(
     name = "242-Valid-Anagram",
     srcs = ["valid_anagram.go"],
     importpath = "github.com/dperezmavro/leetcode/easy/242-Valid-Anagram",

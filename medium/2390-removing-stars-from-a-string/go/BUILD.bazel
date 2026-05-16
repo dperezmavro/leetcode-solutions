@@ -1,19 +1,6 @@
 load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "removing_stars_lib",
-    srcs = ["solution.go"],
-    importpath = "removing-stars-from-a-string",
-    visibility = ["//visibility:private"],
-)
-
-go_test(
-    name = "removing_stars_test",
-    srcs = ["solution_test.go"],
-    embed = [":removing_stars_lib"],
-)
-
-go_library(
     name = "go",
     srcs = ["solution.go"],
     importpath = "github.com/dperezmavro/leetcode/medium/2390-removing-stars-from-a-string/go",
