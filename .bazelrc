@@ -1,4 +1,14 @@
-# .bazelrc
+# Enable Bzlmod (required for MODULE.bazel-based dependency management).
 common --enable_bzlmod
+
+# Ensure build actions use a hermetic PATH so results are reproducible
+# across machines regardless of local tool installations.
 build --incompatible_strict_action_env
-test  --test_output=errors
+
+# Print test failure output inline rather than only storing it in the log file.
+# Without this, a failing test just prints a path and you have to cat the file.
+test --test_output=errors
+
+# Silence the "test size too big" warnings — LeetCode tests finish in <1s,
+# so the timeout bucket warnings are noise. Increase per-target only when needed.
+test --test_verbose_timeout_warnings=false
