@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "703-kth-largest-element-in-a-stream_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/dperezmavro/leetcode/easy/703-kth-largest-element-in-a-stream",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "703-kth-largest-element-in-a-stream",
+    embed = [":703-kth-largest-element-in-a-stream_lib"],
+    visibility = ["//visibility:public"],
+)

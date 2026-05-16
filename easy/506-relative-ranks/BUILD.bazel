@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "506-relative-ranks_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/dperezmavro/leetcode/easy/506-relative-ranks",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "506-relative-ranks",
+    embed = [":506-relative-ranks_lib"],
+    visibility = ["//visibility:public"],
+)
