@@ -8,22 +8,6 @@ import (
 )
 
 func TestKthLargest(t *testing.T) {
-	// func main() {
-	// 	kthLargest := Constructor(3, []int{4, 5, 8, 2})
-	// 	fmt.Println(kthLargest.Add(3))  // return 4
-	// 	fmt.Println(kthLargest.Add(5))  // return 5
-	// 	fmt.Println(kthLargest.Add(10)) // return 5
-	// 	fmt.Println(kthLargest.Add(9))  // return 8
-	// 	fmt.Println(kthLargest.Add(4))  // return 8
-
-	// 	fmt.Println()
-	// 	kthLargest = Constructor(4, []int{7, 7, 7, 7, 8, 3})
-	// 	fmt.Println(kthLargest.Add(2))
-	// 	fmt.Println(kthLargest.Add(10))
-	// 	fmt.Println(kthLargest.Add(9))
-	// 	fmt.Println(kthLargest.Add(9))
-	// }
-
 	tests := []struct {
 		k        int
 		starting []int
@@ -36,13 +20,19 @@ func TestKthLargest(t *testing.T) {
 			ops:      []int{3, 5, 10, 9, 4},
 			results:  []int{4, 5, 5, 8, 8},
 		},
+		{
+			k:        4,
+			starting: []int{7, 7, 7, 7, 8, 3},
+			ops:      []int{2, 10, 9, 9},
+			results:  []int{7, 7, 7, 8},
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("%d %+v", tt.k, tt.starting), func(t *testing.T) {
-			kthLargest := Constructor(3, []int{4, 5, 8, 2})
+			kthLargest := Constructor(tt.k, tt.starting)
 			results := []int{}
-			for v := range tt.ops {
+			for _, v := range tt.ops {
 				results = append(results, kthLargest.Add(v))
 			}
 
@@ -53,13 +43,6 @@ func TestKthLargest(t *testing.T) {
 			) {
 				t.Errorf("wanted %+v, got %+v", tt.results, results)
 			}
-
-			// testify
-			// fmt.Println(kthLargest.Add(3))  // return 4
-			// fmt.Println(kthLargest.Add(5))  // return 5
-			// fmt.Println(kthLargest.Add(10)) // return 5
-			// fmt.Println(kthLargest.Add(9))  // return 8
-			// fmt.Println(kthLargest.Add(4))  // return 8
 		})
 	}
 }

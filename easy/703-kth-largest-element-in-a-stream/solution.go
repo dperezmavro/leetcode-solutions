@@ -24,13 +24,13 @@ func Constructor(k int, nums []int) KthLargest {
 	return kth
 }
 
-func (this *KthLargest) Add(val int) int {
-	heap.Push(this.minHeap, val)
+func (k *KthLargest) Add(val int) int {
+	heap.Push(k.minHeap, val)
 
-	if this.minHeap.Len() > this.k {
-		heap.Pop(this.minHeap)
+	if k.minHeap.Len() > k.k {
+		heap.Pop(k.minHeap)
 	}
-	return (*this.minHeap)[0]
+	return (*k.minHeap)[0]
 }
 
 type MinHeap []int
