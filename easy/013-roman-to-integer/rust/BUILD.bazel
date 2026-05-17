@@ -1,0 +1,14 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "roman-to-integer",
+    srcs = ["src/solution.rs"],
+    edition = "2024",
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "roman-to-integer_test",
+    crate = ":roman-to-integer",
+    edition = "2024",
+)
