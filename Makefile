@@ -12,6 +12,10 @@ test-go:
 	bazel test --build_tag_filters='' \
 		$(shell bazel query 'kind("go_test", //...)')
 
+test-rust:
+	bazel test --build_tag_filters='' \
+		$(shell bazel query 'kind("rust_test", //...)')
+
 # Run the tests for a single problem.
 # Usage: make test-problem TARGET=//medium/438-find-all-anagrams-in-a-string:find_all_anagrams_test
 TARGET ?= //medium/438-find-all-anagrams-in-a-string:find_all_anagrams_test
@@ -30,4 +34,4 @@ tidy:
 
 # Show all test targets without running them.
 list-tests:
-	bazel query 'kind("go_test", //...)'
+	bazel query 'kind("go_test|rust_test", //...)'

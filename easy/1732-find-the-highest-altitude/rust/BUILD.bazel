@@ -1,0 +1,14 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "find-the-highest-altitude",
+    srcs = ["src/solution.rs"],
+    edition = "2024",
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "find-the-highest-altitude_test",
+    crate = ":find-the-highest-altitude",
+    edition = "2024",
+)
