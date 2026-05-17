@@ -1,0 +1,36 @@
+name: Tests
+
+on:
+  pull_request:
+    paths:
+      - 'easy/**'
+      - 'medium/**'
+      - 'hard/**'
+      - 'MODULE.bazel'
+      - 'MODULE.bazel.lock'
+      - 'go.work'
+      - 'go.work.sum'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Bazel
+        uses: bazel-contrib/setup-bazel@0.9.1
+        with:
+          bazelisk-cache: true
+
+      - name: Cache Bazel
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/bazel
+          key: bazel-${{ runner.os }}-${{ hashFiles('MODULE.bazel', 'MODULE.bazel.lock', 'go.work', 'go.work.sum') }}
+          restore-keys: |
+            bazel-${{ runner.os }}-
+
+      - name: Run tests
+        run: bazel test //...
