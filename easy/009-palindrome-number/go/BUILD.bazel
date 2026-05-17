@@ -1,14 +1,14 @@
 load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "009-palindrome-number",
+    name = "go",
     srcs = ["package palindrome_number.go"],
-    importpath = "github.com/dperezmavro/leetcode/easy/009-palindrome-number",
+    importpath = "github.com/dperezmavro/leetcode/easy/009-palindrome-number/go",
     visibility = ["//visibility:public"],
 )
 
 go_test(
-    name = "009-palindrome-number_test",
+    name = "go_test",
     srcs = ["package palindrome_number_test.go"],
-    embed = [":009-palindrome-number"],
+    embed = [":go"],
 )
