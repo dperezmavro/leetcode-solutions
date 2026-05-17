@@ -1,0 +1,14 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "madian-of-two-sorted-arrays",
+    srcs = ["src/lib.rs"],
+    edition = "2024",
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "madian-of-two-sorted-arrays_test",
+    crate = ":madian-of-two-sorted-arrays",
+    edition = "2024",
+)
