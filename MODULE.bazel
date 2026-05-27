@@ -20,5 +20,6 @@ go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_work = "//:go.work")
 use_repo(
     go_deps,
+    "com_github_magiconair_properties",
     "com_github_stretchr_testify",
 )
