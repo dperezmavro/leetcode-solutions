@@ -4,6 +4,7 @@ use (
 	./easy/703-kth-largest-element-in-a-stream
 	./hard/0004-median-of-two-sorted-arrays/go
 	./medium/0215-kth-largest-element-in-an-array/go
+	./medium/0347-top-k-frequent-elements/go
 	./medium/0355-design-twitter/go
 	./medium/0735-asteroid-colissions/go
 )
