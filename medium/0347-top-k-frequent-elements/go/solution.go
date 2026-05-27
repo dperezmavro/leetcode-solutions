@@ -2,7 +2,6 @@ package solution
 
 import (
 	"container/heap"
-	"log"
 )
 
 type Frequency struct {
@@ -26,7 +25,6 @@ func topKFrequent(nums []int, k int) []int {
 		})
 	}
 
-	log.Printf("%+v\n", counts)
 	res := []int{}
 	for range k {
 		el := heap.Pop(pq)
