@@ -2,6 +2,7 @@ package solution
 
 import (
 	"container/heap"
+	"container/list"
 	"sync/atomic"
 )
 
@@ -20,7 +21,7 @@ type Tweet struct {
 type User struct {
 	ID               int
 	FollowedAccounts map[int]*User
-	PersonalTweets   []*Tweet
+	PersonalTweets   *list.List
 }
 
 func (u *User) AddFollowedAccount(f *User) {
@@ -28,7 +29,9 @@ func (u *User) AddFollowedAccount(f *User) {
 }
 
 func (u *User) AddTweet(p *Tweet) {
-	u.PersonalTweets = append([]*Tweet{p}, u.PersonalTweets...)
+	u.PersonalTweets.PushFront(p)
+
+	// append([]*Tweet{p}, u.PersonalTweets...)
 }
 
 func (u *User) RemoveFollower(f *User) {
@@ -60,12 +63,14 @@ func (t *Twitter) GetNewsFeed(userId int) []int {
 
 	pq := &PriorityQueue{}
 	heap.Init(pq)
-	for _, p := range u.PersonalTweets {
-		heap.Push(pq, p)
+
+	for e := u.PersonalTweets.Front(); e != nil; e = e.Next() {
+		heap.Push(pq, e.Value.(*Tweet))
 	}
+
 	for _, f := range u.FollowedAccounts {
-		for _, p := range f.PersonalTweets {
-			heap.Push(pq, p)
+		for e := f.PersonalTweets.Front(); e != nil; e = e.Next() {
+			heap.Push(pq, e.Value.(*Tweet))
 		}
 	}
 
@@ -96,7 +101,7 @@ func (t *Twitter) getOrCreateUser(userId int) *User {
 	u := &User{
 		ID:               userId,
 		FollowedAccounts: make(map[int]*User),
-		PersonalTweets:   []*Tweet{},
+		PersonalTweets:   &list.List{},
 	}
 
 	t.Users[userId] = u
