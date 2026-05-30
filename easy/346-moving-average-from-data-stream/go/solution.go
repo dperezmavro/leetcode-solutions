@@ -14,22 +14,22 @@ func Constructor(size int) MovingAverage {
 	}
 }
 
-func (this *MovingAverage) Next(val int) float64 {
+func (ma *MovingAverage) Next(val int) float64 {
 	// add new value
-	this.currentSum += val
+	ma.currentSum += val
 
-	if len(this.numbers) < this.k {
-		this.numbers = append(this.numbers, val)
+	if len(ma.numbers) < ma.k {
+		ma.numbers = append(ma.numbers, val)
 	} else {
 		// remove oldest value
-		this.currentSum -= this.numbers[this.oldestElementPtr]
+		ma.currentSum -= ma.numbers[ma.oldestElementPtr]
 
 		// store current element in freshest position
-		this.numbers[this.oldestElementPtr] = val
+		ma.numbers[ma.oldestElementPtr] = val
 	}
 
 	// increment to next position across the ring
-	this.oldestElementPtr = (this.oldestElementPtr + 1) % this.k
+	ma.oldestElementPtr = (ma.oldestElementPtr + 1) % ma.k
 
-	return float64(this.currentSum) / float64(len(this.numbers))
+	return float64(ma.currentSum) / float64(len(ma.numbers))
 }
