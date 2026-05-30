@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go",
     srcs = ["solution.go"],
-    importpath = "github.com/dperezmavro/leetcode/easy/346-moving-average-from-data-stream/go",
+    importpath = "github.com/dperezmavro/leetcode/hard/0239-sliding-window-maximum/go",
     visibility = ["//visibility:public"],
 )
 
@@ -11,4 +11,5 @@ go_test(
     name = "go_test",
     srcs = ["solution_test.go"],
     embed = [":go"],
+    deps = ["@com_github_magiconair_properties//assert"],
 )
