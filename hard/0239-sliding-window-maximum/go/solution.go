@@ -39,8 +39,19 @@ func maxSlidingWindow(nums []int, k int) []int {
 	result = append(result, currMax)
 	for _, n := range nums[k:] {
 		oldestNum := currWindow[0]
+		// if the top of the heap and oldest number and biggest number, remove
 		if m[0] == oldestNum {
 			heap.Pop(&m)
+		} else {
+			// need to find where to pop the number from
+			idx := 0
+			for i, v := range m {
+				if v == oldestNum {
+					idx = i
+					break
+				}
+			}
+			heap.Remove(&m, idx)
 		}
 		currWindow = currWindow[1:]
 		currWindow = append(currWindow, n)
