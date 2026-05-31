@@ -1,0 +1,14 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "container-with-most-water",
+    srcs = ["src/lib.rs"],
+    edition = "2024",
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "container-with-most-water_test",
+    crate = ":container-with-most-water",
+    edition = "2024",
+)
