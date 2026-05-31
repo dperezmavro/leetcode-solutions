@@ -6,6 +6,7 @@ use (
 	./easy/703-kth-largest-element-in-a-stream
 	./hard/0004-median-of-two-sorted-arrays/go
 	./hard/0239-sliding-window-maximum/go
+	./medium/0011-container-with-most-water/go
 	./medium/0071-simplify-path/go
 	./medium/0215-kth-largest-element-in-an-array/go
 	./medium/0347-top-k-frequent-elements/go
