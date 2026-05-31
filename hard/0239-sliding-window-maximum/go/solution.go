@@ -1,22 +1,8 @@
 package sliding_window_maximum
 
 import (
-	"container/heap"
+	"container/list"
 )
-
-type MaxHeap []int
-
-func (m MaxHeap) Len() int           { return len(m) }
-func (m MaxHeap) Swap(i, j int)      { m[i], m[j] = m[j], m[i] }
-func (m MaxHeap) Less(i, j int) bool { return m[i] > m[j] }
-func (m *MaxHeap) Push(i any)        { *m = append(*m, i.(int)) }
-func (m *MaxHeap) Pop() any {
-	old := *m
-	x := old[len(old)-1]
-	old = old[:len(old)-1]
-	*m = old
-	return x
-}
 
 func maxSlidingWindow(nums []int, k int) []int {
 	// special base case
@@ -24,42 +10,41 @@ func maxSlidingWindow(nums []int, k int) []int {
 		return nums
 	}
 
-	m := make(MaxHeap, 0)
-	heap.Init(&m)
-
 	result := []int{}
-	currMax := 0
 
+	l := list.New()
+	// build the first window
 	for _, c := range nums[0:k] {
-		heap.Push(&m, c)
+		if l.Len() == 0 {
+			l.PushFront(c)
+			continue
+		}
+
+		for l.Len() > 0 && l.Back().Value.(int) < c {
+			l.Remove(l.Back())
+		}
+
+		l.PushBack(c)
 	}
 	currWindow := nums[0:k]
-	currMax = m[0]
 
-	result = append(result, currMax)
+	result = append(result, l.Front().Value.(int))
+
+	// iterate on the rest of the array
 	for _, n := range nums[k:] {
 		oldestNum := currWindow[0]
-		// if the top of the heap and oldest number and biggest number, remove
-		if m[0] == oldestNum {
-			heap.Pop(&m)
-		} else {
-			// need to find where to pop the number from
-			idx := 0
-			for i, v := range m {
-				if v == oldestNum {
-					idx = i
-					break
-				}
-			}
-			heap.Remove(&m, idx)
+		if l.Front().Value.(int) == oldestNum {
+			l.Remove(l.Front())
 		}
 		currWindow = currWindow[1:]
 		currWindow = append(currWindow, n)
 
-		heap.Push(&m, n)
-		currMax = m[0]
+		for l.Len() > 0 && l.Back().Value.(int) < n {
+			l.Remove(l.Back())
+		}
 
-		result = append(result, currMax)
+		l.PushBack(n)
+		result = append(result, l.Front().Value.(int))
 	}
 	return result
 }

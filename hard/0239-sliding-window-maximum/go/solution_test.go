@@ -38,6 +38,11 @@ func TestSolution(t *testing.T) {
 			nums:   []int{9, 10, 9, -7, -4, -8, 2, -6},
 			output: []int{10, 10, 9, 2},
 		},
+		{
+			k:      3,
+			nums:   []int{9, 8, 9, 8},
+			output: []int{9, 9},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("%+v", tt.nums), func(t *testing.T) {
