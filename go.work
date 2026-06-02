@@ -13,5 +13,3 @@ use (
 	./medium/0355-design-twitter/go
 	./medium/0735-asteroid-colissions/go
 )
-
-
