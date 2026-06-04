@@ -13,7 +13,7 @@ func findSecretWordReturns(words []string, master *Master, checkedAlready map[st
 	idx := len(words) / 2
 	for _, ok := checkedAlready[words[idx]]; ok; {
 		// in case we have checked this word, pick another word
-		idx = rand.Intn(len(words))
+		idx = rand.Intn(len(words) / 2)
 	}
 
 	res := master.Guess(words[idx])
