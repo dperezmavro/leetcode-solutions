@@ -20,8 +20,9 @@ func (m *Master) Guess(word string) int {
 		return -1
 	}
 
+	m.k++
+
 	if !slices.Contains(m.words, word) {
-		m.k++
 		return -1
 	} else {
 		if word == m.pass {
