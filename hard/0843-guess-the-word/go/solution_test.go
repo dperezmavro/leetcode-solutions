@@ -278,8 +278,12 @@ func TestCheckDistances(t *testing.T) {
 					words:       tt.words,
 					pass:        tt.pass,
 				}
-				res := findSecretWordReturns(tt.words,
-					m, make(map[string]bool))
+				res := findSecretWordReturns(
+					tt.words,
+					m,
+					make(map[string]bool),
+					make(map[string]int),
+				)
 				if res != tt.pass {
 					t.Errorf("wrong pass: wanted %s got %s", tt.pass, res)
 				}
