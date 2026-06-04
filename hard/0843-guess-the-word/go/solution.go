@@ -1,7 +1,6 @@
 package solution
 
 import (
-	"log"
 	"slices"
 )
 
@@ -97,7 +96,6 @@ func (p *PasswordFinder) findSecretWordReturns() string {
 
 		// remove words with a delta
 		p.removeWordsWithDGT(passwordDelta, currentWord)
-		log.Printf("filter default-2: %d: %+v", len(p.words), p.words)
 
 		return p.findSecretWordReturns()
 	}
