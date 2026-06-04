@@ -8,13 +8,13 @@ go_binary(
 
 go_library(
     name = "go_lib",
-    srcs = ["main.go"],
+    srcs = ["solution.go"],
     importpath = "github.com/dperezmavro/leetcode/medium/0002-add-two-numbers/go",
     visibility = ["//visibility:private"],
 )
 
 go_test(
     name = "go_test",
-    srcs = ["main_test.go"],
+    srcs = ["solution_test.go"],
     embed = [":go_lib"],
 )
