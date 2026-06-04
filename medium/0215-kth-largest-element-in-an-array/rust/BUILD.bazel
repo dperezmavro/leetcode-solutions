@@ -9,6 +9,7 @@ rust_library(
 
 rust_test(
     name = "kth-largest-element-in-an-array_test",
+    size = "small",
     crate = ":kth-largest-element-in-an-array",
     edition = "2024",
 )

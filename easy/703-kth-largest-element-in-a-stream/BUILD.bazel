@@ -9,6 +9,7 @@ go_library(
 
 go_test(
     name = "703-kth-largest-element-in-a-stream_test",
+    size = "small",
     srcs = ["solution_test.go"],
     embed = [":703-kth-largest-element-in-a-stream"],
     deps = ["@com_github_stretchr_testify//assert"],

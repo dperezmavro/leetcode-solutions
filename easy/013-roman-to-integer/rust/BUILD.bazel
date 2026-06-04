@@ -9,6 +9,7 @@ rust_library(
 
 rust_test(
     name = "roman-to-integer_test",
+    size = "small",
     crate = ":roman-to-integer",
     edition = "2024",
 )

@@ -9,6 +9,7 @@ rust_library(
 
 rust_test(
     name = "find-the-highest-altitude_test",
+    size = "small",
     crate = ":find-the-highest-altitude",
     edition = "2024",
 )

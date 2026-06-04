@@ -48,6 +48,7 @@ go_test(
     name = "<slug>_test",
     srcs = ["solution_test.go"],
     embed = [":<slug>"],
+    size = "small",
     deps = ["@com_github_stretchr_testify//assert:go_default_library"],
 )
 ```
