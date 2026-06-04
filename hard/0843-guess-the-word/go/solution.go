@@ -5,6 +5,8 @@ import (
 	"slices"
 )
 
+var distances map[string]int = make(map[string]int)
+
 func findSecretWord(words []string, master *Master) {
 	var checkedAlready map[string]bool = make(map[string]bool, 10)
 	findSecretWordReturns(words, master, checkedAlready)
@@ -16,88 +18,73 @@ func findSecretWordReturns(words []string, master *Master, checkedAlready map[st
 		idx = (len(words) + 1) / 2
 	}
 
-	res := master.Guess(words[idx])
-	// log.Printf("Guessed word: %s: %d\n", words[idx], res)
-
+	passwordDelta := master.Guess(words[idx])
 	checkedAlready[words[idx]] = true
 
-	switch res {
+	switch passwordDelta {
 	case 6:
 		return words[idx]
 	case -1:
-		// word_to_remove := words[idx]
+		word_to_remove := words[idx]
 		words = slices.Delete(words, idx, idx+1)
+		words = removeWordsWithDLT(6, words, word_to_remove)
+		log.Printf("filter -1: %d: %+v", len(words), words)
+		return findSecretWordReturns(words, master, checkedAlready)
+	default:
+		currentWord := words[idx]
+
+		// delete current word, not a solution
+		words = slices.Delete(words, idx, idx+1)
+		// remove words with a D less than the delta needed to reach the password
+		// i.e. words too similar to this word, but too dissimilar to the password
+		words = removeWordsWithDLT(6-passwordDelta, words, currentWord)
+
+		log.Printf("filter default-1: %d: %+v", len(words), words)
+
+		// remove words with a delta
+		words = removeWordsWithDGT(passwordDelta, words, currentWord)
+		log.Printf("filter default-2: %d: %+v", len(words), words)
+
 		return findSecretWordReturns(words, master, checkedAlready)
 	}
-
-	currentWord := words[idx]
-	currentWordMatch := res
-
-	// delete current word, not a solution
-	words = slices.Delete(words, idx, idx+1)
-
-	// delete all words whose delta is less than 6 - match
-	// iterate backwards so we don't delete the wrong word
-	// for i := len(words) - 1; i >= 0; i-- {
-	// 	d := manhattanDistance(currentWord, words[i])
-	// 	if d < 6-currentWordMatch {
-	// 		log.Printf("deleting word %s %d\n", words[i], d)
-	// 		words = slices.Delete(words, i, i+1)
-	// 	}
-	// }
-	words = removeWordsWithDLT(6-currentWordMatch, words, currentWord)
-
-	words = reduceWordSet(currentWord, currentWordMatch, words)
-	return findSecretWordReturns(words, master, checkedAlready)
 }
 
+// removeWordsWithDLT removes words whose manhattan distance is less than d
 func removeWordsWithDLT(d int, words []string, word string) []string {
 	result := []string{}
 	for _, w := range words {
 		dd := manhattanDistance(word, w)
 		if dd >= d {
 			result = append(result, w)
-			log.Printf("keeping word %s %d\n", w, dd)
-		} else {
-			log.Printf("removing word %s %d\n", w, dd)
 		}
 	}
-
-	log.Printf("original words: %d, new words %d\n", len(words), len(result))
-
 	return result
 }
 
-func reduceWordSet(currentWord string, currentMax int, words []string) []string {
-	d := map[string]int{}
+func removeWordsWithDGT(d int, words []string, word string) []string {
+	result := []string{}
+
 	for _, w := range words {
-		if w == currentWord {
-			d[w] = currentMax
-			continue
-		}
-		d[w] = manhattanDistance(currentWord, w)
-	}
-
-	for k, v := range d {
-		if v > (6 - currentMax) {
-			delete(d, k)
+		dd := manhattanDistance(word, w)
+		if dd <= 6-d {
+			result = append(result, w)
 		}
 	}
-
-	res := []string{}
-	for w := range d {
-		res = append(res, w)
-	}
-	return res
+	return result
 }
 
 func manhattanDistance(s1, s2 string) int {
 	distance := 0 // identical strings
+	if d, ok := distances[s1+s2]; ok {
+		return d
+	}
 	for i := range len(s1) {
 		if s1[i] != s2[i] {
 			distance++
 		}
 	}
+
+	distances[s1+s2] = distance
 
 	return distance
 }

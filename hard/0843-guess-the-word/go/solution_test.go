@@ -166,24 +166,127 @@ func TestCheckDistances(t *testing.T) {
 		{
 			pass:        "ccoyyo",
 			maxAttempts: 10,
-			words:       []string{"ccoyyo", "wichbx", "oahwep", "tpulot", "eqznzs", "vvmplb", "eywinm", "dqefpt", "kmjmxr", "ihkovg", "trbzyb", "xqulhc", "bcsbfw", "rwzslk", "abpjhw", "mpubps", "viyzbc", "kodlta", "ckfzjh", "phuepp", "rokoro", "nxcwmo", "awvqlr", "uooeon", "hhfuzz", "sajxgr", "oxgaix", "fnugyu", "lkxwru", "mhtrvb", "xxonmg", "tqxlbr", "euxtzg", "tjwvad", "uslult", "rtjosi", "hsygda", "vyuica", "mbnagm", "uinqur", "pikenp", "szgupv", "qpxmsw", "vunxdn", "jahhfn", "kmbeok", "biywow", "yvgwho", "hwzodo", "loffxk", "xavzqd", "vwzpfe", "uairjw", "itufkt", "kaklud", "jjinfa", "kqbttl", "zocgux", "ucwjig", "meesxb", "uysfyc", "kdfvtw", "vizxrv", "rpbdjh", "wynohw", "lhqxvx", "kaadty", "dxxwut", "vjtskm", "yrdswc", "byzjxm", "jeomdc", "saevda", "himevi", "ydltnu", "wrrpoc", "khuopg", "ooxarg", "vcvfry", "thaawc", "bssybb", "ajcwbj", "arwfnl", "nafmtm", "xoaumd", "vbejda", "kaefne", "swcrkh", "reeyhj", "vmcwaf", "chxitv", "qkwjna", "vklpkp", "xfnayl", "ktgmfn", "xrmzzm", "fgtuki", "zcffuv", "srxuus", "pydgmq"},
+			words: []string{
+				"ccoyyo",
+				"wichbx",
+				"oahwep",
+				"tpulot",
+				"eqznzs",
+				"vvmplb",
+				"eywinm",
+				"dqefpt",
+				"kmjmxr",
+				"ihkovg",
+				"trbzyb",
+				"xqulhc",
+				"bcsbfw",
+				"rwzslk",
+				"abpjhw",
+				"mpubps",
+				"viyzbc",
+				"kodlta",
+				"ckfzjh",
+				"phuepp",
+				"rokoro",
+				"nxcwmo",
+				"awvqlr",
+				"uooeon",
+				"hhfuzz",
+				"sajxgr",
+				"oxgaix",
+				"fnugyu",
+				"lkxwru",
+				"mhtrvb",
+				"xxonmg",
+				"tqxlbr",
+				"euxtzg",
+				"tjwvad",
+				"uslult",
+				"rtjosi",
+				"hsygda",
+				"vyuica",
+				"mbnagm",
+				"uinqur",
+				"pikenp",
+				"szgupv",
+				"qpxmsw",
+				"vunxdn",
+				"jahhfn",
+				"kmbeok",
+				"biywow",
+				"yvgwho",
+				"hwzodo",
+				"loffxk",
+				"xavzqd",
+				"vwzpfe",
+				"uairjw",
+				"itufkt",
+				"kaklud",
+				"jjinfa",
+				"kqbttl",
+				"zocgux",
+				"ucwjig",
+				"meesxb",
+				"uysfyc",
+				"kdfvtw",
+				"vizxrv",
+				"rpbdjh",
+				"wynohw",
+				"lhqxvx",
+				"kaadty",
+				"dxxwut",
+				"vjtskm",
+				"yrdswc",
+				"byzjxm",
+				"jeomdc",
+				"saevda",
+				"himevi",
+				"ydltnu",
+				"wrrpoc",
+				"khuopg",
+				"ooxarg",
+				"vcvfry",
+				"thaawc",
+				"bssybb",
+				"ajcwbj",
+				"arwfnl",
+				"nafmtm",
+				"xoaumd",
+				"vbejda",
+				"kaefne",
+				"swcrkh",
+				"reeyhj",
+				"vmcwaf",
+				"chxitv",
+				"qkwjna",
+				"vklpkp",
+				"xfnayl",
+				"ktgmfn",
+				"xrmzzm",
+				"fgtuki",
+				"zcffuv",
+				"srxuus",
+				"pydgmq",
+			},
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.pass, func(t *testing.T) {
-			m := &Master{
-				maxAttempts: tt.maxAttempts,
-				words:       tt.words,
-				pass:        tt.pass,
-			}
-			res := findSecretWordReturns(tt.words, m, make(map[string]bool))
-			if res != tt.pass {
-				t.Errorf("wrong pass: wanted %s got %s", tt.pass, res)
-			}
+		t.Run(tt.pass,
+			func(t *testing.T) {
+				m := &Master{
+					maxAttempts: tt.maxAttempts,
+					words:       tt.words,
+					pass:        tt.pass,
+				}
+				res := findSecretWordReturns(tt.words,
+					m, make(map[string]bool))
+				if res != tt.pass {
+					t.Errorf("wrong pass: wanted %s got %s", tt.pass, res)
+				}
 
-			if m.k > m.maxAttempts {
-				t.Errorf("max attempts exceeded: %d", m.k)
-			}
-		})
+				if m.k > m.maxAttempts {
+					t.Errorf("max attempts exceeded: %d", m.k)
+				}
+			})
 	}
 }
