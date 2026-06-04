@@ -1,7 +1,7 @@
 package solution
 
 import (
-	"math/rand"
+	"log"
 	"slices"
 )
 
@@ -13,7 +13,7 @@ func findSecretWordReturns(words []string, master *Master, checkedAlready map[st
 	idx := len(words) / 2
 	for _, ok := checkedAlready[words[idx]]; ok; {
 		// in case we have checked this word, pick another word
-		idx = rand.Intn(len(words) / 2)
+		idx = (len(words) + 1) / 2
 	}
 
 	res := master.Guess(words[idx])
@@ -21,9 +21,11 @@ func findSecretWordReturns(words []string, master *Master, checkedAlready map[st
 
 	checkedAlready[words[idx]] = true
 
-	if res == 6 {
+	switch res {
+	case 6:
 		return words[idx]
-	} else if res == -1 {
+	case -1:
+		// word_to_remove := words[idx]
 		words = slices.Delete(words, idx, idx+1)
 		return findSecretWordReturns(words, master, checkedAlready)
 	}
@@ -35,16 +37,35 @@ func findSecretWordReturns(words []string, master *Master, checkedAlready map[st
 	words = slices.Delete(words, idx, idx+1)
 
 	// delete all words whose delta is less than 6 - match
-	for i := len(words) - 1; i >= 0; i-- {
-		d := manhattanDistance(currentWord, words[i])
-		if d < 6-currentWordMatch {
-			// log.Printf("deleting word %s %d\n", words[i], d)
-			words = slices.Delete(words, i, i+1)
-		}
-	}
+	// iterate backwards so we don't delete the wrong word
+	// for i := len(words) - 1; i >= 0; i-- {
+	// 	d := manhattanDistance(currentWord, words[i])
+	// 	if d < 6-currentWordMatch {
+	// 		log.Printf("deleting word %s %d\n", words[i], d)
+	// 		words = slices.Delete(words, i, i+1)
+	// 	}
+	// }
+	words = removeWordsWithDLT(6-currentWordMatch, words, currentWord)
 
 	words = reduceWordSet(currentWord, currentWordMatch, words)
 	return findSecretWordReturns(words, master, checkedAlready)
+}
+
+func removeWordsWithDLT(d int, words []string, word string) []string {
+	result := []string{}
+	for _, w := range words {
+		dd := manhattanDistance(word, w)
+		if dd >= d {
+			result = append(result, w)
+			log.Printf("keeping word %s %d\n", w, dd)
+		} else {
+			log.Printf("removing word %s %d\n", w, dd)
+		}
+	}
+
+	log.Printf("original words: %d, new words %d\n", len(words), len(result))
+
+	return result
 }
 
 func reduceWordSet(currentWord string, currentMax int, words []string) []string {
