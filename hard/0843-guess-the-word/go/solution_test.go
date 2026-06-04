@@ -2,43 +2,44 @@ package solution
 
 import (
 	"testing"
-	// "github.com/stretchr/testify/assert"
+
+	"github.com/stretchr/testify/assert"
 )
 
-// func TestMaster(t *testing.T) {
-// 	tests := []struct {
-// 		pass        string
-// 		maxAttempts int
-// 		words       []string
-// 		want        int
-// 	}{
-// 		{
-// 			pass:        "AAAAAA",
-// 			words:       []string{"ABCDEF"},
-// 			maxAttempts: 10,
-// 			want:        1,
-// 		},
-// 		{
-// 			pass:        "AAAAAA",
-// 			words:       []string{"AAAAAA"},
-// 			maxAttempts: 10,
-// 			want:        6,
-// 		},
-// 	}
+func TestMaster(t *testing.T) {
+	tests := []struct {
+		pass        string
+		maxAttempts int
+		words       []string
+		want        int
+	}{
+		{
+			pass:        "AAAAAA",
+			words:       []string{"ABCDEF"},
+			maxAttempts: 10,
+			want:        1,
+		},
+		{
+			pass:        "AAAAAA",
+			words:       []string{"AAAAAA"},
+			maxAttempts: 10,
+			want:        6,
+		},
+	}
 
-// 	for _, tt := range tests {
-// 		t.Run(tt.pass,
-// 			func(t *testing.T) {
-// 				m := Master{
-// 					maxAttempts: tt.maxAttempts,
-// 					words:       tt.words,
-// 					pass:        tt.pass,
-// 				}
+	for _, tt := range tests {
+		t.Run(tt.pass,
+			func(t *testing.T) {
+				m := Master{
+					maxAttempts: tt.maxAttempts,
+					words:       tt.words,
+					pass:        tt.pass,
+				}
 
-// 				assert.Equal(t, tt.want, m.Guess(tt.words[0]))
-// 			})
-// 	}
-// }
+				assert.Equal(t, tt.want, m.Guess(tt.words[0]))
+			})
+	}
+}
 
 func TestMain(t *testing.T) {
 	var pass string = "hbaczn"
