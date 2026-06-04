@@ -41,7 +41,7 @@ func TestMaster(t *testing.T) {
 	}
 }
 
-func TestMain(t *testing.T) {
+func TestCheckDistances(t *testing.T) {
 	var pass string = "hbaczn"
 	var guesses []string = []string{
 		"gaxckt",
