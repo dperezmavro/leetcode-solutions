@@ -54,7 +54,6 @@ func (p *PasswordFinder) removeWordsWithDGT(
 }
 
 func (p *PasswordFinder) manhattanDistance(s1, s2 string) int {
-	// func manhattanDistance(s1, s2 string, distances map[string]int) int {
 	distance := 0 // identical strings
 	if d, ok := p.distances[s1+s2]; ok {
 		return d
@@ -85,21 +84,16 @@ func (p *PasswordFinder) findSecretWordReturns() string {
 		word_to_remove := p.words[idx]
 		p.words = slices.Delete(p.words, idx, idx+1)
 		p.removeWordsWithDLT(6, word_to_remove)
-		// log.Printf("filter -1: %d: %+v", len(words), words)
+
 		return p.findSecretWordReturns()
 	default:
 		currentWord := p.words[idx]
-
-		// log.Printf("current word %s: %d", currentWord, passwordDelta)
-		// log.Printf("filter default-0: %d: %+v", len(words), words)
 
 		// delete current word, not a solution
 		p.words = slices.Delete(p.words, idx, idx+1)
 		// remove words with a D less than the delta needed to reach the password
 		// i.e. words too similar to this word, but too dissimilar to the password
 		p.removeWordsWithDLT(6-passwordDelta, currentWord)
-
-		// log.Printf("filter default-1: %d: %+v", len(words), words)
 
 		// remove words with a delta
 		p.removeWordsWithDGT(passwordDelta, currentWord)
