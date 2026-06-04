@@ -1,99 +1,62 @@
 package solution
 
 import (
+	"log"
 	"slices"
 )
 
 func findSecretWord(words []string, master *Master) {
 	var checkedAlready map[string]bool = make(map[string]bool, 10)
 	var distances map[string]int = make(map[string]int)
-	findSecretWordReturns(words, master, checkedAlready, distances)
+	p := &PasswordFinder{
+		words:        words,
+		master:       master,
+		distances:    distances,
+		checkedWords: checkedAlready,
+	}
+	p.findSecretWordReturns()
 }
 
-// convenience function
-func findSecretWordReturns(
-	words []string,
-	master *Master,
-	checkedAlready map[string]bool,
-	distances map[string]int,
-) string {
-	idx := len(words) / 2
-	for _, ok := checkedAlready[words[idx]]; ok; {
-		// in case we have checked this word, pick another word
-		idx = (len(words) + 1) / 2
-	}
-
-	passwordDelta := master.Guess(words[idx])
-	checkedAlready[words[idx]] = true
-
-	switch passwordDelta {
-	case 6:
-		return words[idx]
-	case -1:
-		word_to_remove := words[idx]
-		words = slices.Delete(words, idx, idx+1)
-		words = removeWordsWithDLT(6, words, word_to_remove, distances)
-		// log.Printf("filter -1: %d: %+v", len(words), words)
-		return findSecretWordReturns(words, master, checkedAlready, distances)
-	default:
-		currentWord := words[idx]
-
-		// delete current word, not a solution
-		words = slices.Delete(words, idx, idx+1)
-		// remove words with a D less than the delta needed to reach the password
-		// i.e. words too similar to this word, but too dissimilar to the password
-		words = removeWordsWithDLT(6-passwordDelta, words, currentWord, distances)
-
-		// log.Printf("filter default-1: %d: %+v", len(words), words)
-
-		// remove words with a delta
-		words = removeWordsWithDGT(passwordDelta, words, currentWord, distances)
-		// log.Printf("filter default-2: %d: %+v", len(words), words)
-
-		return findSecretWordReturns(words, master, checkedAlready, distances)
-	}
+type PasswordFinder struct {
+	words        []string
+	checkedWords map[string]bool
+	distances    map[string]int
+	master       *Master
 }
 
-// removeWordsWithDLT removes words whose manhattan
-// distance is less than d
-func removeWordsWithDLT(
+func (p *PasswordFinder) removeWordsWithDLT(
 	d int,
-	words []string,
 	word string,
-	distances map[string]int,
-) []string {
+) {
 	result := []string{}
-	for _, w := range words {
-		dd := manhattanDistance(word, w, distances)
+	for _, w := range p.words {
+		dd := p.manhattanDistance(word, w)
 		if dd >= d {
 			result = append(result, w)
 		}
 	}
-	return result
+	p.words = result
 }
 
-// removeWordsWithDGT removes words whose manhattan
-// distance is greater than 6-d
-func removeWordsWithDGT(
+func (p *PasswordFinder) removeWordsWithDGT(
 	d int,
-	words []string,
 	word string,
-	distances map[string]int,
-) []string {
+) {
 	result := []string{}
 
-	for _, w := range words {
-		dd := manhattanDistance(word, w, distances)
+	for _, w := range p.words {
+		dd := p.manhattanDistance(word, w)
 		if dd <= 6-d {
 			result = append(result, w)
 		}
 	}
-	return result
+	p.words = result
 }
 
-func manhattanDistance(s1, s2 string, distances map[string]int) int {
+func (p *PasswordFinder) manhattanDistance(s1, s2 string) int {
+	// func manhattanDistance(s1, s2 string, distances map[string]int) int {
 	distance := 0 // identical strings
-	if d, ok := distances[s1+s2]; ok {
+	if d, ok := p.distances[s1+s2]; ok {
 		return d
 	}
 	for i := range len(s1) {
@@ -102,7 +65,46 @@ func manhattanDistance(s1, s2 string, distances map[string]int) int {
 		}
 	}
 
-	distances[s1+s2] = distance
-
+	// same distance
+	p.distances[s1+s2] = distance
+	p.distances[s2+s1] = distance
 	return distance
+}
+
+// convenience function
+func (p *PasswordFinder) findSecretWordReturns() string {
+	idx := len(p.words) / 2
+
+	passwordDelta := p.master.Guess(p.words[idx])
+	p.checkedWords[p.words[idx]] = true
+
+	switch passwordDelta {
+	case 6:
+		return p.words[idx]
+	case -1:
+		word_to_remove := p.words[idx]
+		p.words = slices.Delete(p.words, idx, idx+1)
+		p.removeWordsWithDLT(6, word_to_remove)
+		// log.Printf("filter -1: %d: %+v", len(words), words)
+		return p.findSecretWordReturns()
+	default:
+		currentWord := p.words[idx]
+
+		// log.Printf("current word %s: %d", currentWord, passwordDelta)
+		// log.Printf("filter default-0: %d: %+v", len(words), words)
+
+		// delete current word, not a solution
+		p.words = slices.Delete(p.words, idx, idx+1)
+		// remove words with a D less than the delta needed to reach the password
+		// i.e. words too similar to this word, but too dissimilar to the password
+		p.removeWordsWithDLT(6-passwordDelta, currentWord)
+
+		// log.Printf("filter default-1: %d: %+v", len(words), words)
+
+		// remove words with a delta
+		p.removeWordsWithDGT(passwordDelta, currentWord)
+		log.Printf("filter default-2: %d: %+v", len(p.words), p.words)
+
+		return p.findSecretWordReturns()
+	}
 }
