@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go",
+    srcs = [
+        "master.go",
+        "solution.go",
+    ],
+    importpath = "github.com/dperezmavro/leetcode/hard/0843-guess-the-word/go",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_test",
+    srcs = ["solution_test.go"],
+    embed = [":go"],
+)
