@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/magiconair/properties/assert"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAdd(t *testing.T) {
@@ -47,19 +47,11 @@ func TestAdd(t *testing.T) {
 			res_slice := []int{}
 
 			for ln_res != nil {
-				// if ln_res.Val != ln_want.Val {
-				// 	t.Errorf("error value: wanted %d, got %d", ln_want.Val, ln_res.Val)
-				// }
 				res_slice = append(res_slice, ln_res.Val)
 				ln_res = ln_res.Next
 			}
 
 			assert.Equal(t, res_slice, tt.slice_res)
-
-			// if res.Next == nil && ln_want.Next != nil {
-			// 	t.Errorf("different null states %+v %+v", res, ln_want)
-
-			// }
 		})
 	}
 }

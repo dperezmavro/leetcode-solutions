@@ -1,20 +1,15 @@
-load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
-
-go_binary(
-    name = "solution",
-    embed = [":go_lib"],
-    visibility = ["//visibility:public"],
-)
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_lib",
+    name = "go",
     srcs = ["solution.go"],
     importpath = "github.com/dperezmavro/leetcode/medium/0002-add-two-numbers/go",
-    visibility = ["//visibility:private"],
+    visibility = ["//visibility:public"],
 )
 
 go_test(
     name = "go_test",
     srcs = ["solution_test.go"],
-    embed = [":go_lib"],
+    embed = [":go"],
+    deps = ["@com_github_stretchr_testify//assert"],
 )
