@@ -21,6 +21,7 @@ func (m *Master) Guess(word string) int {
 	}
 
 	m.k++
+	log.Printf("K: %d\n", m.k)
 
 	if !slices.Contains(m.words, word) {
 		return -1

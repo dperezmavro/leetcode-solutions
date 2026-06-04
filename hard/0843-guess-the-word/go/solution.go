@@ -1,49 +1,64 @@
 package solution
 
 import (
+	"math/rand"
 	"slices"
 )
 
-var stop bool = false
-var checkedAlready map[string]bool = make(map[string]bool, 10)
-var samples = 2
-
 func findSecretWord(words []string, master *Master) {
-	maxMatch := 0
-	maxWord := ""
-	for i := range samples {
-		idx := i * (len(words) / samples)
-		if _, ok := checkedAlready[words[idx]]; ok {
-			idx = ((i + samples) * (len(words) / samples)) % len(words)
-		}
-		res := master.Guess(words[idx])
-		checkedAlready[words[idx]] = true
-		if res == 6 {
-			stop = true
-			return
-		} else if res == -1 {
-			words = slices.Delete(words, idx, idx+1)
-		} else if res > maxMatch {
-			maxWord = words[idx]
-			maxMatch = res
-			words = slices.Delete(words, idx, idx+1)
+	var checkedAlready map[string]bool = make(map[string]bool, 10)
+	findSecretWordReturns(words, master, checkedAlready)
+}
+func findSecretWordReturns(words []string, master *Master, checkedAlready map[string]bool) string {
+	idx := len(words) / 2
+	for _, ok := checkedAlready[words[idx]]; ok; {
+		// in case we have checked this word, pick another word
+		idx = rand.Intn(len(words))
+	}
+
+	res := master.Guess(words[idx])
+	// log.Printf("Guessed word: %s: %d\n", words[idx], res)
+
+	checkedAlready[words[idx]] = true
+
+	if res == 6 {
+		return words[idx]
+	} else if res == -1 {
+		words = slices.Delete(words, idx, idx+1)
+		return findSecretWordReturns(words, master, checkedAlready)
+	}
+
+	currentWord := words[idx]
+	currentWordMatch := res
+
+	// delete current word, not a solution
+	words = slices.Delete(words, idx, idx+1)
+
+	// delete all words whose delta is less than 6 - match
+	for i := len(words) - 1; i >= 0; i-- {
+		d := manhattanDistance(currentWord, words[i])
+		if d < 6-currentWordMatch {
+			// log.Printf("deleting word %s %d\n", words[i], d)
+			words = slices.Delete(words, i, i+1)
 		}
 	}
 
-	words = reduceWordSet(maxWord, maxMatch, words)
-	if !stop {
-		findSecretWord(words, master)
-	}
+	words = reduceWordSet(currentWord, currentWordMatch, words)
+	return findSecretWordReturns(words, master, checkedAlready)
 }
 
-func reduceWordSet(maxWord string, maxMatch int, words []string) []string {
+func reduceWordSet(currentWord string, currentMax int, words []string) []string {
 	d := map[string]int{}
 	for _, w := range words {
-		d[w] = manhattanDistance(maxWord, w)
+		if w == currentWord {
+			d[w] = currentMax
+			continue
+		}
+		d[w] = manhattanDistance(currentWord, w)
 	}
 
 	for k, v := range d {
-		if v > (6 - maxMatch) {
+		if v > (6 - currentMax) {
 			delete(d, k)
 		}
 	}
