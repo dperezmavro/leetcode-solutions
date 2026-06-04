@@ -279,10 +279,9 @@ func TestCheckDistances(t *testing.T) {
 					pass:        tt.pass,
 				}
 				p := &PasswordFinder{
-					words:        tt.words,
-					master:       m,
-					checkedWords: make(map[string]bool),
-					distances:    make(map[string]int),
+					words:     tt.words,
+					master:    m,
+					distances: make(map[string]int),
 				}
 				res := p.findSecretWordReturns()
 				if res != tt.pass {

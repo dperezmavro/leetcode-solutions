@@ -17,11 +17,10 @@ func (m *Master) Guess(word string) int {
 
 	if m.k > m.maxAttempts {
 		log.Println("Either you took too many guesses, or you did not find the secret word.")
-		return -1
+		panic("too many attempts")
 	}
 
 	m.k++
-	log.Printf("K: %d\n", m.k)
 
 	if !slices.Contains(m.words, word) {
 		return -1
