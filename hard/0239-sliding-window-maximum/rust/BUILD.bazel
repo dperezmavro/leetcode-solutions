@@ -1,0 +1,15 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "sliding-window-maximum",
+    srcs = ["src/lib.rs"],
+    edition = "2024",
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "sliding-window-maximum_test",
+    size = "small",
+    crate = ":sliding-window-maximum",
+    edition = "2024",
+)
