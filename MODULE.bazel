@@ -32,3 +32,5 @@ python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     python_version = "3.13",
 )
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
