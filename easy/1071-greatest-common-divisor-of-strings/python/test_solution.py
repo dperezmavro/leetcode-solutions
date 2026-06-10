@@ -24,3 +24,6 @@ class TestSolution(unittest.TestCase):
         s = Solution()
         for t in tests:
             self.assertEqual(t.want, s.gcdOfStrings(t.s1, t.s2))
+
+if __name__ == '__main__':
+    unittest.main()
