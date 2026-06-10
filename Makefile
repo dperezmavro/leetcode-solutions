@@ -16,6 +16,10 @@ test-rust:
 	bazel test --build_tag_filters='' \
 		$(shell bazel query 'kind("rust_test", //...)')
 
+test-python:
+	bazel test --build_tag_filters='' \
+		$(shell bazel query 'kind("py_test", //...)')
+
 # Run the tests for a single problem.
 # Usage: make test-problem TARGET=//medium/438-find-all-anagrams-in-a-string:find_all_anagrams_test
 TARGET ?= //medium/438-find-all-anagrams-in-a-string:find_all_anagrams_test
