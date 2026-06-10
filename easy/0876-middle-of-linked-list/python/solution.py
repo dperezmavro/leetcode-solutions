@@ -23,3 +23,4 @@ class Solution:
             fast_index += 1
 
         return slow_node
+
