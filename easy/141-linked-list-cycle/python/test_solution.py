@@ -30,3 +30,6 @@ class TestSolution(unittest.TestCase):
         for t in tests:
             s = Solution()
             self.assertEqual(t.hasCycle, s.hasCycle(t.head))
+
+if __name__ == '__main__':
+    unittest.main()

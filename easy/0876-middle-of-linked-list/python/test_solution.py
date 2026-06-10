@@ -27,3 +27,6 @@ class TestSolution(unittest.TestCase):
             s = Solution()
             res = s.middleNode(head=t.head)
             self.assertEqual(t.want, res.val)
+
+if __name__ == '__main__':
+    unittest.main()
