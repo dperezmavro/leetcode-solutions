@@ -26,3 +26,9 @@ use_repo(
     "com_github_magiconair_properties",
     "com_github_stretchr_testify",
 )
+
+# Python tooling
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    python_version = "3.13",
+)
