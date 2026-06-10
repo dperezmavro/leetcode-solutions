@@ -11,9 +11,13 @@ class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         fast = head
         slow = head
+        index = 0
         while fast and fast.next:
+            if fast == slow:
+                if index > 0:
+                    return True
+                else:
+                    index = 1
             slow = slow.next
             fast = fast.next.next
-            if fast.val == slow.val:
-                return True
         return False

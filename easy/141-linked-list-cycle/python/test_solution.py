@@ -4,7 +4,7 @@ from solution import Solution, ListNode
 
 
 class TestCase:
-    def __init__(self, list: List[int], hasCycle=bool):
+    def __init__(self, list: List[int], hasCycle: bool):
         head = ListNode(x=list[0])
         node = head
         for i in list[1:]:
@@ -23,6 +23,8 @@ class TestSolution(unittest.TestCase):
         tests = [
             TestCase(list=[1], hasCycle=False),
             TestCase(list=[1, 2], hasCycle=True),
+            TestCase(list=[1, 2], hasCycle=False),
+            TestCase(list=[1, 1, 1, 1], hasCycle=False),
             TestCase(list=[1, 2, 3, 4, 5, 6, 7], hasCycle=True),
         ]
         for t in tests:
