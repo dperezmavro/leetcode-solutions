@@ -1,7 +1,6 @@
 package swap_nodes_in_pairs
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -33,6 +32,11 @@ func TestSoluion(t *testing.T) {
 			input: []int{1, 2, 3},
 			want:  []int{2, 1, 3},
 		},
+		{
+			name:  "four",
+			input: []int{1, 2, 3, 4},
+			want:  []int{2, 1, 4, 3},
+		},
 	}
 
 	for _, tt := range tests {
@@ -47,29 +51,15 @@ func TestSoluion(t *testing.T) {
 func LNFromArr(t *testing.T, in []int) *ListNode {
 	t.Helper()
 
-	if in == nil {
+	if len(in) == 0 {
 		return nil
 	}
 
-	if len(in) == 1 {
-		return &ListNode{
-			Val: in[0],
-		}
-	}
-
-	var h *ListNode
-	head := h
-	for _, v := range in {
-		if h != nil {
-			h.Next = &ListNode{
-				Val: v,
-			}
-			h = h.Next
-		} else {
-			h = &ListNode{
-				Val: v,
-			}
-		}
+	head := &ListNode{Val: in[0]}
+	curr := head
+	for _, v := range in[1:] {
+		curr.Next = &ListNode{Val: v}
+		curr = curr.Next
 	}
 
 	return head
@@ -82,15 +72,11 @@ func ArrFromLN(t *testing.T, h *ListNode) []int {
 		return nil
 	}
 
-	fmt.Printf("returnning array \n")
 	res := []int{}
-
 	for h != nil {
 		res = append(res, h.Val)
 		h = h.Next
 	}
-
-	fmt.Printf("returnning array %+v\n", res)
 
 	return res
 }
