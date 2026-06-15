@@ -41,9 +41,15 @@ func TestSoluion(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// to test points
 			res := swapPairs(LNFromArr(t, tt.input))
 			res_arr := ArrFromLN(t, res)
 			assert.Equal(t, tt.want, res_arr)
+
+			// to test values
+			res_2 := swapPairsValues(LNFromArr(t, tt.input))
+			res_arr_2 := ArrFromLN(t, res_2)
+			assert.Equal(t, tt.want, res_arr_2)
 		})
 	}
 }
