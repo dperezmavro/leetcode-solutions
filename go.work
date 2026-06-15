@@ -11,6 +11,7 @@ use (
 	./medium/0002-add-two-numbers/go
 	./medium/0005-longest-palindromic-substring/go
 	./medium/0011-container-with-most-water/go
+	./medium/0024-swap-nodes-in-pairs/go
 	./medium/0071-simplify-path/go
 	./medium/0215-kth-largest-element-in-an-array/go
 	./medium/0347-top-k-frequent-elements/go
