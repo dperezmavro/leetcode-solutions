@@ -10,8 +10,10 @@ class TestCase():
 class TestSolution(unittest.TestCase):
     def test_solution(self):
         tests = [
-            # TestCase(input="babad", want="bab"),
+            TestCase(input="babad", want="bab"),
             TestCase(input="cbbd", want="bb"),
+            TestCase(input="ccc", want="ccc"),
+            TestCase(input="aba", want="aba"),
         ]
 
         for t in tests:
