@@ -8,6 +8,7 @@ use (
 	./hard/0239-sliding-window-maximum/go
 	./hard/0843-guess-the-word/go
 	./medium/0002-add-two-numbers/go
+	./medium/0005-longest-palindromic-substring/go
 	./medium/0011-container-with-most-water/go
 	./medium/0071-simplify-path/go
 	./medium/0215-kth-largest-element-in-an-array/go
