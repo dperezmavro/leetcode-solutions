@@ -1,11 +1,8 @@
 package remove_duplicates_from_sorted_array
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import common "github.com/dperezmavro/leetcode-solutions/common/go"
 
-func deleteDuplicates(head *ListNode) *ListNode {
+func deleteDuplicates(head *common.ListNode) *common.ListNode {
 	res := head
 	for res != nil {
 		if res.Next != nil && res.Val == res.Next.Val {
