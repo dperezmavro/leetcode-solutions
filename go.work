@@ -1,6 +1,7 @@
 go 1.26.4
 
 use (
+	./common/go
 	./easy/0083-remove-duplicates-from-sorted-list/go
 	./easy/141-linked-list-cycle/go
 	./easy/346-moving-average-from-data-stream/go
