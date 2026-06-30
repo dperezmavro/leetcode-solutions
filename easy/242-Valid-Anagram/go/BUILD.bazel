@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go",
     srcs = ["valid_anagram.go"],
-    importpath = "github.com/dperezmavro/leetcode/easy/242-valid-anagram/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/easy/242-valid-anagram/go",
     visibility = ["//visibility:public"],
 )
 

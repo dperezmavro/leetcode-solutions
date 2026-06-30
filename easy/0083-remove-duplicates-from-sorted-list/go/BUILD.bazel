@@ -3,6 +3,7 @@ load("@rules_go//go:def.bzl", "go_library")
 go_library(
     name = "go",
     srcs = ["solution.go"],
-    importpath = "github.com/dperezmavro/leetcode/easy/0083-remove-duplicates-from-sorted-list/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/easy/0083-remove-duplicates-from-sorted-list/go",
     visibility = ["//visibility:public"],
+    deps = ["//common/go"],
 )

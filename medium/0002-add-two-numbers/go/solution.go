@@ -1,14 +1,11 @@
 package solution
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import common "github.com/dperezmavro/leetcode-solutions/common/go"
 
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+func addTwoNumbers(l1 *common.ListNode, l2 *common.ListNode) *common.ListNode {
 	sum := 0
 	carry := 0
-	res := &ListNode{}
+	res := &common.ListNode{}
 	working_l := res
 	for l1 != nil || l2 != nil {
 		if carry == 1 {
@@ -41,12 +38,12 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
 		if l1 == nil && l2 == nil {
 			if carry == 1 {
-				next := &ListNode{}
+				next := &common.ListNode{}
 				working_l.Next = next
 				working_l = next
 			}
 		} else {
-			next := &ListNode{}
+			next := &common.ListNode{}
 			working_l.Next = next
 			working_l = next
 		}

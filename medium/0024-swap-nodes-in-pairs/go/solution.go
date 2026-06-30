@@ -1,11 +1,8 @@
 package swap_nodes_in_pairs
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import common "github.com/dperezmavro/leetcode-solutions/common/go"
 
-func swapPairs(head *ListNode) *ListNode {
+func swapPairs(head *common.ListNode) *common.ListNode {
 	if head == nil {
 		return nil
 	}
@@ -13,7 +10,7 @@ func swapPairs(head *ListNode) *ListNode {
 		return head
 	}
 
-	dummy := &ListNode{Next: head}
+	dummy := &common.ListNode{Next: head}
 	prev := dummy
 
 	for prev.Next != nil && prev.Next.Next != nil {
@@ -31,7 +28,7 @@ func swapPairs(head *ListNode) *ListNode {
 
 }
 
-func swapPairsValues(head *ListNode) *ListNode {
+func swapPairsValues(head *common.ListNode) *common.ListNode {
 	if head == nil {
 		return nil
 	}

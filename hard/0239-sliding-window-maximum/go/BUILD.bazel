@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go",
     srcs = ["solution.go"],
-    importpath = "github.com/dperezmavro/leetcode/hard/0239-sliding-window-maximum/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/hard/0239-sliding-window-maximum/go",
     visibility = ["//visibility:public"],
 )
 

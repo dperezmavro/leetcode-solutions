@@ -3,8 +3,9 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go",
     srcs = ["solution.go"],
-    importpath = "github.com/dperezmavro/leetcode/easy/141-linked-list-cycle/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/easy/141-linked-list-cycle/go",
     visibility = ["//visibility:public"],
+    deps = ["//common/go"],
 )
 
 go_test(
@@ -12,5 +13,8 @@ go_test(
     size = "small",
     srcs = ["solution_test.go"],
     embed = [":go"],
-    deps = ["@com_github_magiconair_properties//assert"],
+    deps = [
+        "//common/go",
+        "@com_github_magiconair_properties//assert",
+    ],
 )

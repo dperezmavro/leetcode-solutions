@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go",
     srcs = ["main.go"],
-    importpath = "github.com/dperezmavro/leetcode/medium/0438-find-all-anagrams-in-a-string/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/medium/0438-find-all-anagrams-in-a-string/go",
     visibility = ["//visibility:public"],
 )
 

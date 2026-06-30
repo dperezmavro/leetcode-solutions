@@ -3,8 +3,9 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go",
     srcs = ["solution.go"],
-    importpath = "github.com/dperezmavro/leetcode/medium/0024-swap-nodes-in-pairs/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/medium/0024-swap-nodes-in-pairs/go",
     visibility = ["//visibility:public"],
+    deps = ["//common/go"],
 )
 
 go_test(
@@ -12,5 +13,8 @@ go_test(
     size = "small",
     srcs = ["solution_test.go"],
     embed = [":go"],
-    deps = ["@com_github_stretchr_testify//assert"],
+    deps = [
+        "//common/go",
+        "@com_github_stretchr_testify//assert",
+    ],
 )

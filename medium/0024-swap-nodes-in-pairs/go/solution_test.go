@@ -3,6 +3,8 @@ package swap_nodes_in_pairs
 import (
 	"testing"
 
+	common "github.com/dperezmavro/leetcode-solutions/common/go"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -54,24 +56,24 @@ func TestSoluion(t *testing.T) {
 	}
 }
 
-func LNFromArr(t *testing.T, in []int) *ListNode {
+func LNFromArr(t *testing.T, in []int) *common.ListNode {
 	t.Helper()
 
 	if len(in) == 0 {
 		return nil
 	}
 
-	head := &ListNode{Val: in[0]}
+	head := &common.ListNode{Val: in[0]}
 	curr := head
 	for _, v := range in[1:] {
-		curr.Next = &ListNode{Val: v}
+		curr.Next = &common.ListNode{Val: v}
 		curr = curr.Next
 	}
 
 	return head
 }
 
-func ArrFromLN(t *testing.T, h *ListNode) []int {
+func ArrFromLN(t *testing.T, h *common.ListNode) []int {
 	t.Helper()
 
 	if h == nil {

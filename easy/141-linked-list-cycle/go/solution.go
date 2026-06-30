@@ -1,11 +1,8 @@
 package linked_list_cycle
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import common "github.com/dperezmavro/leetcode-solutions/common/go"
 
-func hasCycle(head *ListNode) bool {
+func hasCycle(head *common.ListNode) bool {
 	if head == nil {
 		return false
 	}

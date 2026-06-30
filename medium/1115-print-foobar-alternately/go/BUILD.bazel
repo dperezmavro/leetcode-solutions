@@ -9,7 +9,7 @@ go_binary(
 go_library(
     name = "go_lib",
     srcs = ["main.go"],
-    importpath = "github.com/dperezmavro/leetcode/medium/1115-print-foobar-alternately/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/medium/1115-print-foobar-alternately/go",
     visibility = ["//visibility:private"],
 )
 

@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go",
     srcs = ["solution.go"],
-    importpath = "github.com/dperezmavro/leetcode/easy/346-moving-average-from-data-stream/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/easy/346-moving-average-from-data-stream/go",
     visibility = ["//visibility:public"],
 )
 

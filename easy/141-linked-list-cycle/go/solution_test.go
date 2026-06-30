@@ -3,18 +3,19 @@ package linked_list_cycle
 import (
 	"testing"
 
+	common "github.com/dperezmavro/leetcode-solutions/common/go"
 	"github.com/magiconair/properties/assert"
 )
 
 func TestHasCycle(t *testing.T) {
 	tests := []struct {
-		getLL    func() *ListNode
+		getLL    func() *common.ListNode
 		name     string
 		hasCycle bool
 	}{
 		{
-			getLL: func() *ListNode {
-				return &ListNode{
+			getLL: func() *common.ListNode {
+				return &common.ListNode{
 					Val: -1,
 				}
 			},
@@ -23,17 +24,17 @@ func TestHasCycle(t *testing.T) {
 		},
 		{
 			hasCycle: true,
-			getLL: func() *ListNode {
-				ll1 := &ListNode{
+			getLL: func() *common.ListNode {
+				ll1 := &common.ListNode{
 					Val: 3,
 				}
-				ll2 := &ListNode{
+				ll2 := &common.ListNode{
 					Val: 2,
 				}
-				ll3 := &ListNode{
+				ll3 := &common.ListNode{
 					Val: 0,
 				}
-				ll4 := &ListNode{
+				ll4 := &common.ListNode{
 					Val: -4,
 				}
 
@@ -49,11 +50,11 @@ func TestHasCycle(t *testing.T) {
 		{
 			hasCycle: true,
 			name:     "test3",
-			getLL: func() *ListNode {
-				ll1 := &ListNode{
+			getLL: func() *common.ListNode {
+				ll1 := &common.ListNode{
 					Val: 1,
 				}
-				ll2 := &ListNode{
+				ll2 := &common.ListNode{
 					Val: 2,
 				}
 
@@ -67,11 +68,11 @@ func TestHasCycle(t *testing.T) {
 		{
 			hasCycle: false,
 			name:     "test4",
-			getLL: func() *ListNode {
-				ll1 := &ListNode{
+			getLL: func() *common.ListNode {
+				ll1 := &common.ListNode{
 					Val: 1,
 				}
-				ll2 := &ListNode{
+				ll2 := &common.ListNode{
 					Val: 2,
 				}
 
@@ -84,17 +85,17 @@ func TestHasCycle(t *testing.T) {
 		{
 			hasCycle: false,
 			name:     "test5",
-			getLL: func() *ListNode {
-				ll1 := &ListNode{
+			getLL: func() *common.ListNode {
+				ll1 := &common.ListNode{
 					Val: 1,
 				}
-				ll2 := &ListNode{
+				ll2 := &common.ListNode{
 					Val: 2,
 				}
-				ll3 := &ListNode{
+				ll3 := &common.ListNode{
 					Val: 2,
 				}
-				ll4 := &ListNode{
+				ll4 := &common.ListNode{
 					Val: 2,
 				}
 
@@ -109,17 +110,17 @@ func TestHasCycle(t *testing.T) {
 		{
 			hasCycle: true,
 			name:     "test6",
-			getLL: func() *ListNode {
-				ll1 := &ListNode{
+			getLL: func() *common.ListNode {
+				ll1 := &common.ListNode{
 					Val: 1,
 				}
-				ll2 := &ListNode{
+				ll2 := &common.ListNode{
 					Val: 2,
 				}
-				ll3 := &ListNode{
+				ll3 := &common.ListNode{
 					Val: 2,
 				}
-				ll4 := &ListNode{
+				ll4 := &common.ListNode{
 					Val: 2,
 				}
 

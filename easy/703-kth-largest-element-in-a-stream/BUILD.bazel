@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "703-kth-largest-element-in-a-stream",
     srcs = ["solution.go"],
-    importpath = "github.com/dperezmavro/leetcode/easy/703-kth-largest-element-in-a-stream",
+    importpath = "github.com/dperezmavro/leetcode-solutions/easy/703-kth-largest-element-in-a-stream",
     visibility = ["//visibility:public"],
 )
 

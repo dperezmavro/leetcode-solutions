@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go",
     srcs = ["main.go"],
-    importpath = "github.com/dperezmavro/leetcode/easy/013-roman-to-integer/go",
+    importpath = "github.com/dperezmavro/leetcode-solutions/easy/013-roman-to-integer/go",
     visibility = ["//visibility:public"],
 )
 

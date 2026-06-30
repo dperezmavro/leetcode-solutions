@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	common "github.com/dperezmavro/leetcode-solutions/common/go"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -43,7 +44,7 @@ func TestAdd(t *testing.T) {
 				sToN(t, tt.slice_l2),
 			)
 
-			var ln_res *ListNode = res
+			var ln_res *common.ListNode = res
 			res_slice := []int{}
 
 			for ln_res != nil {
@@ -56,9 +57,9 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-func sToN(t *testing.T, n []int) *ListNode {
+func sToN(t *testing.T, n []int) *common.ListNode {
 	t.Helper()
-	ln := &ListNode{
+	ln := &common.ListNode{
 		Val: n[0],
 	}
 	or_ln := ln
@@ -69,7 +70,7 @@ func sToN(t *testing.T, n []int) *ListNode {
 		if i == 0 {
 			continue
 		}
-		ln2 := &ListNode{
+		ln2 := &common.ListNode{
 			Val: num,
 		}
 		ln.Next = ln2
