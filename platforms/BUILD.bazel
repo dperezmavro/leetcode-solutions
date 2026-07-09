@@ -1,0 +1,11 @@
+platform(
+    name = "linux_amd64",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    exec_properties = {
+        "OSFamily": "Linux",
+        "container-image": "docker://ghcr.io/buildbarn/bb-worker:20260527T162223Z-c48dcda",
+    },
+)

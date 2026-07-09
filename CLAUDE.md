@@ -20,3 +20,12 @@
 - Library target name = problem slug (e.g. `703-kth-largest-element-in-a-stream`)
 - Test target name = problem slug + `_test`
 - embed in go_test must match the library target name exactly.
+
+# Agent instructions
+During your replies:
+- do not use prose
+- use technically accurate language
+- avoid comments when not strictly necessary
+- don't be verbose
+- use the fewest amount of words possible
+- don't commit anything

@@ -12,3 +12,21 @@ test --test_output=errors
 # Silence the "test size too big" warnings — LeetCode tests finish in <1s,
 # so the timeout bucket warnings are noise. Increase per-target only when needed.
 test --test_verbose_timeout_warnings=false
+
+# Shared Buildbarn endpoint/instance. Reused by the configs below.
+build:bb --remote_instance_name=
+build:bb --remote_local_fallback=true
+
+# --config=remote-cache : cache only. Actions execute locally; results (CAS/AC)
+# are stored/fetched from Buildbarn.
+build:remote-cache --config=bb
+build:remote-cache --remote_cache=grpc://localhost:8980
+build:remote-cache --remote_upload_local_results=true
+
+# --config=remote-exec : full remote execution on Buildbarn workers (linux/amd64).
+# Implies caching. Requires the exec platform below to match the worker image.
+# build:remote-exec --config=bb
+# build:remote-exec --remote_executor=grpc://localhost:8980
+# build:remote-exec --host_platform=//platforms:linux_amd64
+# build:remote-exec --platforms=//platforms:linux_amd64
+# build:remote-exec --extra_execution_platforms=//platforms:linux_amd64
