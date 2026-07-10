@@ -1,0 +1,3 @@
+# Repo-wide clippy configuration shared by every rust target.
+# Lint levels are passed via --@rules_rust//:clippy_flags in .bazelrc;
+# this file holds lint-specific thresholds only.

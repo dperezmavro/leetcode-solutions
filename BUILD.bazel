@@ -2,3 +2,10 @@ load("@gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/dperezmavro/leetcode-solutions
 gazelle(name = "gazelle")
+
+# Repo-wide rust lint/format config, consumed via label flags in .bazelrc
+# (--@rules_rust//:clippy.toml and --@rules_rust//:rustfmt.toml).
+exports_files([
+    "clippy.toml",
+    "rustfmt.toml",
+])

@@ -12,3 +12,19 @@ test --test_output=errors
 # Silence the "test size too big" warnings — LeetCode tests finish in <1s,
 # so the timeout bucket warnings are noise. Increase per-target only when needed.
 test --test_verbose_timeout_warnings=false
+
+# Rust clippy lint pass — run: bazel build --config=clippy //...
+# The aspect attaches to every rust_* target; the clippy_checks output group
+# makes the build fail when clippy reports findings. -Dwarnings promotes all
+# clippy warnings to errors. clippy.toml supplies repo-wide lint thresholds.
+build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build:clippy --output_groups=clippy_checks
+build:clippy --@rules_rust//:clippy_flags=-Dwarnings
+build:clippy --@rules_rust//:clippy.toml=//:clippy.toml
+
+# Rust format check — run: bazel build --config=rustfmt //...
+# Fails when any source is not rustfmt-clean. To fix in place, run:
+# bazel run @rules_rust//:rustfmt
+build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
+build:rustfmt --output_groups=rustfmt_checks
+build:rustfmt --@rules_rust//:rustfmt.toml=//:rustfmt.toml

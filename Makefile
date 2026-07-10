@@ -1,4 +1,4 @@
-.PHONY: test test-go test-problem setup
+.PHONY: test test-go test-problem setup lint-rust fmt-rust-check fmt-rust
 
 # Run every Go test in the repo.
 # Bazel discovers all go_test targets under all packages via //...
@@ -19,6 +19,19 @@ test-rust:
 test-python:
 	bazel test --build_tag_filters='' \
 		$(shell bazel query 'kind("py_test", //...)')
+
+# Run clippy over every rust target via the bazel aspect.
+# Fails the build on any clippy finding (see .bazelrc config:clippy).
+lint-rust:
+	bazel build --config=clippy //...
+
+# Verify every rust source is rustfmt-clean (non-mutating).
+fmt-rust-check:
+	bazel build --config=rustfmt //...
+
+# Rewrite every rust source in place with rustfmt.
+fmt-rust:
+	bazel run @rules_rust//:rustfmt
 
 # Run the tests for a single problem.
 # Usage: make test-problem TARGET=//medium/438-find-all-anagrams-in-a-string:find_all_anagrams_test
