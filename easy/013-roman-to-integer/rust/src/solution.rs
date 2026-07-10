@@ -20,10 +20,7 @@ impl Solution {
                 _ => 0,
             };
             if idx != 0 {
-                let prev_char: char = match s.chars().nth(idx - 1) {
-                    Some(c) => c,
-                    _ => '0',
-                };
+                let prev_char: char = s.chars().nth(idx - 1).unwrap_or('0');
                 let prev_val = match number_index.get(&prev_char) {
                     Some(v) => *v,
                     _ => 0,
