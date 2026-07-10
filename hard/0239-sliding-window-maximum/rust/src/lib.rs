@@ -15,12 +15,12 @@ impl Solution {
         // build the first window
         for n in &nums[0..k as usize] {
             curr_window.push_back(*n);
-            if deq.len() == 0 {
+            if deq.is_empty() {
                 deq.push_front(*n);
                 continue;
             }
 
-            while deq.len() > 0 && deq.back().unwrap() < n {
+            while !deq.is_empty() && deq.back().unwrap() < n {
                 deq.pop_back();
             }
 
@@ -37,7 +37,7 @@ impl Solution {
 
             let new_num = *n;
             curr_window.push_back(new_num);
-            while deq.len() > 0 && *(deq.back().unwrap()) < new_num {
+            while !deq.is_empty() && *(deq.back().unwrap()) < new_num {
                 deq.pop_back();
             }
 
