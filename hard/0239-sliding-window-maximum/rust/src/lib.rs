@@ -73,13 +73,15 @@ mod tests {
 
     #[test]
     fn test_4() {
-        let result = Solution::max_sliding_window(vec![1, 3, -1, -3, 5, 3, 6, 7], 3);
+        let result =
+            Solution::max_sliding_window(vec![1, 3, -1, -3, 5, 3, 6, 7], 3);
         assert_eq!(result, vec![3, 3, 5, 5, 6, 7]);
     }
 
     #[test]
     fn test_5() {
-        let result = Solution::max_sliding_window(vec![9, 10, 9, -7, -4, -8, 2, -6], 5);
+        let result =
+            Solution::max_sliding_window(vec![9, 10, 9, -7, -4, -8, 2, -6], 5);
         assert_eq!(result, vec![10, 10, 9, 2]);
     }
 

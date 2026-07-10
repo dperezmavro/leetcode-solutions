@@ -10,14 +10,16 @@ impl Solution {
 
         let mut left: usize = 0;
         let mut right: usize = height.len() - 1;
-        let mut max_volume = cmp::min(height[left], height[right]) * ((right - left) as i32);
+        let mut max_volume =
+            cmp::min(height[left], height[right]) * ((right - left) as i32);
         while left < right {
             if height[left] > height[right] {
                 right -= 1;
             } else if height[left] <= height[right] {
                 left += 1;
             }
-            let tmp_volume = cmp::min(height[left], height[right]) * ((right - left) as i32);
+            let tmp_volume =
+                cmp::min(height[left], height[right]) * ((right - left) as i32);
             if tmp_volume > max_volume {
                 max_volume = tmp_volume;
             }

@@ -2,7 +2,8 @@ pub struct Solution {}
 
 impl Solution {
     pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
-        let mut final_array: Vec<i32> = Vec::with_capacity(nums1.len() + nums2.len());
+        let mut final_array: Vec<i32> =
+            Vec::with_capacity(nums1.len() + nums2.len());
 
         let mut i: usize = 0;
         let mut j: usize = 0;
@@ -55,13 +56,15 @@ mod tests {
 
     #[test]
     fn even_size() {
-        let result = Solution::find_median_sorted_arrays(vec![1, 2], vec![3, 4]);
+        let result =
+            Solution::find_median_sorted_arrays(vec![1, 2], vec![3, 4]);
         assert_eq!(result, 2.5);
     }
 
     #[test]
     fn negative_values() {
-        let result = Solution::find_median_sorted_arrays(vec![-10, -9, -8], vec![1, 2]);
+        let result =
+            Solution::find_median_sorted_arrays(vec![-10, -9, -8], vec![1, 2]);
         assert_eq!(result, -8.0);
     }
 }

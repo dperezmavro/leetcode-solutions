@@ -22,9 +22,17 @@ build:clippy --output_groups=clippy_checks
 build:clippy --@rules_rust//:clippy_flags=-Dwarnings
 build:clippy --@rules_rust//:clippy.toml=//:clippy.toml
 
+# rustfmt config is global (NOT under config:rustfmt) so the format CHECK
+# (bazel build --config=rustfmt) and the in-place FORMATTER
+# (bazel run @rules_rust//:rustfmt) bake the SAME rustfmt.toml. Scoped to
+# config:rustfmt, the runner never sees the flag and silently falls back to
+# rustfmt defaults (max_width=100), disagreeing with the check (max_width=80).
+# rustfmt.toml only affects rustfmt actions, so applying it globally is inert
+# for normal build/test.
+build --@rules_rust//:rustfmt.toml=//:rustfmt.toml
+
 # Rust format check — run: bazel build --config=rustfmt //...
 # Fails when any source is not rustfmt-clean. To fix in place, run:
 # bazel run @rules_rust//:rustfmt
 build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
 build:rustfmt --output_groups=rustfmt_checks
-build:rustfmt --@rules_rust//:rustfmt.toml=//:rustfmt.toml

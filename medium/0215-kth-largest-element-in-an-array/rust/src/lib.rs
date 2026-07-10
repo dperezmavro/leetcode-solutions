@@ -28,7 +28,8 @@ mod tests {
 
     #[test]
     fn test_2() {
-        let result = Solution::find_kth_largest(vec![3, 2, 3, 1, 2, 4, 5, 5, 6], 4);
+        let result =
+            Solution::find_kth_largest(vec![3, 2, 3, 1, 2, 4, 5, 5, 6], 4);
         assert_eq!(result, 4);
     }
 }
