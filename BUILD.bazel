@@ -1,7 +1,18 @@
 load("@gazelle//:def.bzl", "gazelle")
+load("@rules_go//go:def.bzl", "nogo")
 
 # gazelle:prefix github.com/dperezmavro/leetcode-solutions
 gazelle(name = "gazelle")
+
+# Repo-wide Go static-analysis pass. vet = True enables the same analyzers as
+# `go vet`; nogo runs them during compilation of every go_* target and fails the
+# build on any finding. Wired in as the module's nogo via go_sdk.nogo in
+# MODULE.bazel, so it applies to `bazel build`/`bazel test` with no extra flags.
+nogo(
+    name = "nogo",
+    vet = True,
+    visibility = ["//visibility:public"],
+)
 
 # Repo-wide rust lint/format config, consumed via label flags in .bazelrc
 # (--@rules_rust//:clippy.toml and --@rules_rust//:rustfmt.toml).
