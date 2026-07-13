@@ -36,13 +36,11 @@ func TestKthLargest(t *testing.T) {
 				results = append(results, kthLargest.Add(v))
 			}
 
-			if !assert.Equal(
+			assert.Equal(
 				t,
 				tt.results,
 				results,
-			) {
-				t.Errorf("wanted %+v, got %+v", tt.results, results)
-			}
+			)
 		})
 	}
 }

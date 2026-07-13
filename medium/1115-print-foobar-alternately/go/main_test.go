@@ -29,19 +29,16 @@ func TestCode(t *testing.T) {
 			fb := NewFooBar(tt.n)
 
 			wg := sync.WaitGroup{}
-			wg.Add(2)
 
 			wg.Go(func() {
 				fb.Foo(func() {
 					buf.Write([]byte("foo"))
 				})
-				wg.Done()
 			})
 			wg.Go(func() {
 				fb.Bar(func() {
 					buf.Write([]byte("bar"))
 				})
-				wg.Done()
 			})
 
 			wg.Wait()

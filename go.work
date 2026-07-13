@@ -3,7 +3,11 @@ go 1.26.4
 use (
 	./common/go
 	./easy/0083-remove-duplicates-from-sorted-list/go
+	./easy/009-palindrome-number/go
+	./easy/013-roman-to-integer/go
+	./easy/026-remove-duplicates-from-sorted-array/go
 	./easy/141-linked-list-cycle/go
+	./easy/242-valid-anagram/go
 	./easy/346-moving-average-from-data-stream/go
 	./easy/703-kth-largest-element-in-a-stream
 	./hard/0004-median-of-two-sorted-arrays/go
@@ -17,5 +21,8 @@ use (
 	./medium/0215-kth-largest-element-in-an-array/go
 	./medium/0347-top-k-frequent-elements/go
 	./medium/0355-design-twitter/go
+	./medium/0438-find-all-anagrams-in-a-string/go
 	./medium/0735-asteroid-colissions/go
+	./medium/1115-print-foobar-alternately/go
+	./medium/2390-removing-stars-from-a-string/go
 )
