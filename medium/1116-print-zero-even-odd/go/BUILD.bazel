@@ -1,0 +1,16 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go",
+    srcs = ["solution.go"],
+    importpath = "github.com/dperezmavro/leetcode-solutions/medium/1116-print-zero-even-odd/go",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_test",
+    srcs = ["solution_test.go"],
+    embed = [":go"],
+    race = "on",
+    deps = ["@com_github_magiconair_properties//assert"],
+)

@@ -24,5 +24,6 @@ use (
 	./medium/0438-find-all-anagrams-in-a-string/go
 	./medium/0735-asteroid-colissions/go
 	./medium/1115-print-foobar-alternately/go
+	./medium/1116-print-zero-even-odd/go
 	./medium/2390-removing-stars-from-a-string/go
 )
