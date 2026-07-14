@@ -16,6 +16,10 @@ func TestCode(t *testing.T) {
 		n    int
 		want string
 	}{
+		"1": {
+			n:    1,
+			want: "01",
+		},
 		"2": {
 			n:    2,
 			want: "0102",
@@ -24,10 +28,14 @@ func TestCode(t *testing.T) {
 			n:    3,
 			want: "010203",
 		},
+		"5": {
+			n:    5,
+			want: "0102030405",
+		},
 	}
 	for k, tt := range tests {
 		t.Run(k, func(t *testing.T) {
-
+			t.Parallel()
 			zeo := NewZeroEvenOdd(tt.n)
 
 			wg := sync.WaitGroup{}

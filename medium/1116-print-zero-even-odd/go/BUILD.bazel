@@ -9,7 +9,10 @@ go_library(
 
 go_test(
     name = "go_test",
-    srcs = ["solution_test.go"],
+    srcs = [
+        "solution_bench_test.go",
+        "solution_test.go",
+    ],
     embed = [":go"],
     race = "on",
     deps = ["@com_github_magiconair_properties//assert"],
