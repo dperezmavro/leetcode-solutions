@@ -36,3 +36,27 @@ build --@rules_rust//:rustfmt.toml=//:rustfmt.toml
 # bazel run @rules_rust//:rustfmt
 build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
 build:rustfmt --output_groups=rustfmt_checks
+
+
+# Add buildbuddy support for RE and CAS
+build --bes_results_url=https://app.buildbuddy.io/invocation/
+build --bes_backend=grpcs://remote.buildbuddy.io
+common --remote_cache=grpcs://remote.buildbuddy.io
+common --noremote_upload_local_results # Uploads logs & artifacts without writing to cache
+common --remote_timeout=10m
+common --remote_executor=grpcs://remote.buildbuddy.io
+
+# Remote execution runs on Linux/amd64 workers, so pin exec/host/target
+# platforms to the BuildBuddy linux_x86_64 platform. This makes toolchains
+# (Go SDK + C++) resolve for Linux instead of the darwin host — otherwise the
+# darwin `go` binary is shipped to a Linux worker and fails "Exec format error".
+# Use the module-aliased label (NOT @buildbuddy_toolchain//:platform, whose
+# alias resolves to the host-compatible = darwin platform on this Mac, which
+# would route actions to non-existent darwin RE workers).
+build --extra_execution_platforms=@toolchains_buildbuddy//platforms:linux_x86_64
+build --host_platform=@toolchains_buildbuddy//platforms:linux_x86_64
+build --platforms=@toolchains_buildbuddy//platforms:linux_x86_64
+
+# Register the matching linux C++ toolchain so cc actions (e.g. building
+# @bazel_tools ijar/zipper) resolve on the linux exec platform.
+build --extra_toolchains=@toolchains_buildbuddy//toolchains/cc:ubuntu_gcc_x86_64

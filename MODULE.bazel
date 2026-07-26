@@ -7,6 +7,15 @@ bazel_dep(name = "rules_python", version = "2.0.2")
 bazel_dep(name = "rules_go", version = "0.60.0")
 bazel_dep(name = "gazelle", version = "0.50.0")
 bazel_dep(name = "rules_rust", version = "0.70.0")
+bazel_dep(name = "toolchains_buildbuddy", version = "0.0.4")
+
+# BuildBuddy remote execution: provides the Linux/amd64 execution platform and
+# a matching C++ toolchain for the RE workers. Referenced by
+# --host_platform / --platforms / --extra_execution_platforms in .bazelrc as
+# @buildbuddy_toolchain//:platform.
+buildbuddy = use_extension("@toolchains_buildbuddy//:extensions.bzl", "buildbuddy")
+buildbuddy.platform(buildbuddy_container_image = "DEFAULT_IMAGE")
+use_repo(buildbuddy, "buildbuddy_toolchain")
 
 # Rust tooling
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
@@ -17,7 +26,19 @@ register_toolchains("@rust_toolchains//:all")
 
 # Go tooling
 go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
+
+# Host SDK (darwin) for local builds.
 go_sdk.download(version = "1.26.4")
+
+# Linux/amd64 SDK so the Go toolchain can resolve against the BuildBuddy
+# remote-execution platform (Linux workers). Without this, Bazel picks the
+# darwin SDK for the remote exec platform and the `go` binary fails on the
+# Linux worker with "Exec format error".
+go_sdk.download(
+    version = "1.26.4",
+    goarch = "amd64",
+    goos = "linux",
+)
 
 # Register the root //:nogo target so `go vet` analyzers run at build time.
 go_sdk.nogo(nogo = "//:nogo")
