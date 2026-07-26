@@ -37,7 +37,7 @@ impl Solution {
                 ((final_array[final_array.len() / 2] as f64)
                     + (final_array[(final_array.len() / 2) - 1] as f64))
                     / 2.0
-            }
+            },
             _ => final_array[final_array.len() / 2] as f64,
         };
         answer
