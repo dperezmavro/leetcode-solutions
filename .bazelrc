@@ -38,25 +38,44 @@ build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
 build:rustfmt --output_groups=rustfmt_checks
 
 
-# Add buildbuddy support for RE and CAS
-build --bes_results_url=https://app.buildbuddy.io/invocation/
-build --bes_backend=grpcs://remote.buildbuddy.io
-common --remote_cache=grpcs://remote.buildbuddy.io
-common --noremote_upload_local_results # Uploads logs & artifacts without writing to cache
-common --remote_timeout=10m
-common --remote_executor=grpcs://remote.buildbuddy.io
+# Emit git metadata (REPO_URL, COMMIT_SHA, GIT_BRANCH, ...) into the workspace
+# status so BuildBuddy populates commit/branch/repo on each invocation.
+build --workspace_status_command=scripts/workspace_status.sh
 
-# Remote execution runs on Linux/amd64 workers, so pin exec/host/target
-# platforms to the BuildBuddy linux_x86_64 platform. This makes toolchains
-# (Go SDK + C++) resolve for Linux instead of the darwin host — otherwise the
-# darwin `go` binary is shipped to a Linux worker and fails "Exec format error".
-# Use the module-aliased label (NOT @buildbuddy_toolchain//:platform, whose
-# alias resolves to the host-compatible = darwin platform on this Mac, which
-# would route actions to non-existent darwin RE workers).
-build --extra_execution_platforms=@toolchains_buildbuddy//platforms:linux_x86_64
-build --host_platform=@toolchains_buildbuddy//platforms:linux_x86_64
-build --platforms=@toolchains_buildbuddy//platforms:linux_x86_64
+# BuildBuddy Remote Execution (RE) + Remote Cache (CAS).
+#
+# OPT-IN: enabled only with --config=remote. A bare `bazel build`/`bazel test`
+# (no config) runs fully local on the host toolchain and needs no network.
+# Rationale for opt-in rather than opt-out: --extra_execution_platforms and
+# --extra_toolchains accumulate and cannot be cleanly unset by a later config,
+# so making remote the unconditional default and trying to disable it per-invocation
+# is fragile. Gate the whole thing behind one config instead.
+common:remote --bes_results_url=https://app.buildbuddy.io/invocation/
+common:remote --bes_backend=grpcs://remote.buildbuddy.io
+common:remote --remote_cache=grpcs://remote.buildbuddy.io
+common:remote --noremote_upload_local_results # Uploads logs & artifacts without writing to cache
+common:remote --remote_timeout=10m
+common:remote --remote_executor=grpcs://remote.buildbuddy.io
+
+# RE runs on Linux/amd64 workers, so pin exec/host/target platforms to the
+# BuildBuddy linux_x86_64 platform. This makes toolchains (Go SDK + C++) resolve
+# for Linux instead of the darwin host — otherwise the darwin `go` binary is
+# shipped to a Linux worker and fails "Exec format error". Use the module-aliased
+# label (NOT @buildbuddy_toolchain//:platform, whose alias resolves to the
+# host-compatible = darwin platform on this Mac, routing actions to non-existent
+# darwin RE workers).
+common:remote --extra_execution_platforms=@toolchains_buildbuddy//platforms:linux_x86_64
+common:remote --host_platform=@toolchains_buildbuddy//platforms:linux_x86_64
+common:remote --platforms=@toolchains_buildbuddy//platforms:linux_x86_64
 
 # Register the matching linux C++ toolchain so cc actions (e.g. building
 # @bazel_tools ijar/zipper) resolve on the linux exec platform.
-build --extra_toolchains=@toolchains_buildbuddy//toolchains/cc:ubuntu_gcc_x86_64
+common:remote --extra_toolchains=@toolchains_buildbuddy//toolchains/cc:ubuntu_gcc_x86_64
+
+# Remote cache only (CAS) WITHOUT remote execution: actions run locally but read/
+# write the shared cache. Useful offline-tolerant speedup. Enable with
+# --config=remote-cache.
+common:remote-cache --bes_results_url=https://app.buildbuddy.io/invocation/
+common:remote-cache --bes_backend=grpcs://remote.buildbuddy.io
+common:remote-cache --remote_cache=grpcs://remote.buildbuddy.io
+common:remote-cache --remote_timeout=10m

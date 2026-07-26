@@ -1,33 +1,48 @@
-.PHONY: test test-go test-problem setup lint-rust fmt-rust-check fmt-rust lint-go fmt-go-check fmt-go
+.PHONY: test test-go test-rust test-python test-remote build-remote test-problem setup tidy lint-rust fmt-rust-check fmt-rust lint-go fmt-go-check fmt-go list-tests
+
+# Remote execution + cache is OPT-IN (see .bazelrc). Everything runs locally on
+# the host toolchain by default. Toggle per invocation with a variable:
+#   make test REMOTE=1   # BuildBuddy remote execution + cache (Linux workers)
+#   make test CACHE=1    # local execution, shared BuildBuddy cache only (CAS)
+# REMOTE takes precedence if both are set.
+BAZEL_CONFIG := $(if $(REMOTE),--config=remote,$(if $(CACHE),--config=remote-cache))
 
 # Run every Go test in the repo.
 # Bazel discovers all go_test targets under all packages via //...
 # The python package in 1115 is excluded via .bazelignore (it has its own workspace).
 test:
-	bazel test //...
+	bazel test $(BAZEL_CONFIG) //...
+
+# Run the full suite on BuildBuddy remote execution (equivalent to REMOTE=1).
+test-remote:
+	bazel test --config=remote //...
+
+# Build everything on BuildBuddy remote execution.
+build-remote:
+	bazel build --config=remote //...
 
 # Run only Go tests (useful if non-Go rules are added later).
 # The kind() filter selects targets whose rule type matches 'go_test'.
 test-go:
-	bazel test --build_tag_filters='' \
+	bazel test $(BAZEL_CONFIG) --build_tag_filters='' \
 		$(shell bazel query 'kind("go_test", //...)')
 
 test-rust:
-	bazel test --build_tag_filters='' \
+	bazel test $(BAZEL_CONFIG) --build_tag_filters='' \
 		$(shell bazel query 'kind("rust_test", //...)')
 
 test-python:
-	bazel test --build_tag_filters='' \
+	bazel test $(BAZEL_CONFIG) --build_tag_filters='' \
 		$(shell bazel query 'kind("py_test", //...)')
 
 # Run clippy over every rust target via the bazel aspect.
 # Fails the build on any clippy finding (see .bazelrc config:clippy).
 lint-rust:
-	bazel build --config=clippy //...
+	bazel build $(BAZEL_CONFIG) --config=clippy //...
 
 # Verify every rust source is rustfmt-clean (non-mutating).
 fmt-rust-check:
-	bazel build --config=rustfmt //...
+	bazel build $(BAZEL_CONFIG) --config=rustfmt //...
 
 # Rewrite every rust source in place with rustfmt.
 fmt-rust:
@@ -37,7 +52,7 @@ fmt-rust:
 # compilation, so building the go_library targets is what triggers it; the
 # build fails on any vet finding.
 lint-go:
-	bazel build --build_tag_filters='' \
+	bazel build $(BAZEL_CONFIG) --build_tag_filters='' \
 		$(shell bazel query 'kind("go_library", //...)')
 
 # Verify every go source is gofmt-clean (non-mutating). Uses the hermetic
@@ -56,7 +71,7 @@ fmt-go:
 # Usage: make test-problem TARGET=//medium/438-find-all-anagrams-in-a-string:find_all_anagrams_test
 TARGET ?= //medium/438-find-all-anagrams-in-a-string:find_all_anagrams_test
 test-problem:
-	bazel test $(TARGET)
+	bazel test $(BAZEL_CONFIG) $(TARGET)
 
 # Regenerate MODULE.bazel.lock after changing MODULE.bazel dependencies.
 # Run this whenever you add a new bazel_dep or change a dep version.

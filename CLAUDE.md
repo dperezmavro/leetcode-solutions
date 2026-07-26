@@ -12,6 +12,24 @@
 - Run all tests: `make test-go`
 - Run one test: `make test-problem TARGET=//path/to:target_test`
 
+## Local vs remote (BuildBuddy)
+- Builds run **locally on the host toolchain by default**. Remote execution (RE)
+  and remote cache (CAS) are **opt-in** via Bazel configs — nothing hits the
+  network unless you ask.
+- `--config=remote`: RE + CAS on BuildBuddy Linux/amd64 workers.
+- `--config=remote-cache`: local execution, shared BuildBuddy cache only.
+- Via Make (default = local; flags apply to `test`, `test-go/rust/python`,
+  `lint-*`, `fmt-rust-check`, `test-problem`):
+  - `make test` — local
+  - `make test REMOTE=1` — remote execution + cache (same as `make test-remote`)
+  - `make test CACHE=1` — local execution + remote cache
+  - `make build-remote` — build everything remotely
+- RE prerequisites (already wired): a linux/amd64 Go SDK in `MODULE.bazel`, the
+  `toolchains_buildbuddy` module (Linux platform + C++ toolchain), and a
+  BuildBuddy API key as `--remote_header=x-buildbuddy-api-key=...` in
+  `~/.bazelrc`. RE pins platforms to `@toolchains_buildbuddy//platforms:linux_x86_64`
+  (NOT `@buildbuddy_toolchain//:platform`, whose alias resolves to the darwin host).
+
 ## External Go deps
 - Declared in `/go.mod`. Bazel resolves them via the `go_deps` extension in MODULE.bazel.
 - Do NOT create per-problem go.mod files for new problems. The existing ones in 703 and 735 are legacy.
