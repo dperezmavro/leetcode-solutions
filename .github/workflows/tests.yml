@@ -10,6 +10,10 @@ on:
       - 'MODULE.bazel.lock'
       - 'go.work'
       - 'go.work.sum'
+      - '.bazelrc'
+      - 'clippy.toml'
+      - 'rustfmt.toml'
+      - '.github/workflows/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -33,3 +37,9 @@ jobs:
 
       - name: Run tests
         run: bazel test //...
+
+      - name: Lint (clippy)
+        run: bazel build --config=clippy //...
+
+      - name: Format check (rustfmt)
+        run: bazel build --config=rustfmt //...
