@@ -1,4 +1,4 @@
-.PHONY: test test-go test-rust test-python test-remote build-remote test-problem setup tidy lint-rust fmt-rust-check fmt-rust lint-go fmt-go-check fmt-go list-tests
+.PHONY: test test-go test-rust test-python test-remote build-remote test-problem setup tidy lint-rust lint-rust-strict check-rust fmt-rust-check fmt-rust lint-go fmt-go-check fmt-go list-tests
 
 # Remote execution + cache is OPT-IN (see .bazelrc). Everything runs locally on
 # the host toolchain by default. Toggle per invocation with a variable:
@@ -39,6 +39,14 @@ test-python:
 # Fails the build on any clippy finding (see .bazelrc config:clippy).
 lint-rust:
 	bazel build $(BAZEL_CONFIG) --config=clippy //...
+
+# Advisory strict clippy pass (pedantic + nursery). Non-fatal: prints findings
+# as warnings, never fails the build (see .bazelrc config:clippy-strict).
+lint-rust-strict:
+	bazel build $(BAZEL_CONFIG) --config=clippy-strict //...
+
+# Single rust gate: enforced clippy + rustfmt check.
+check-rust: lint-rust fmt-rust-check
 
 # Verify every rust source is rustfmt-clean (non-mutating).
 fmt-rust-check:

@@ -1,3 +1,14 @@
 # Repo-wide clippy configuration shared by every rust target.
 # Lint levels are passed via --@rules_rust//:clippy_flags in .bazelrc;
 # this file holds lint-specific thresholds only.
+
+# Solutions expose their entry points as `pub fn`. By default clippy suppresses
+# lints that would change a public API (e.g. needless_pass_by_value); disabling
+# this makes those lints fire on the solution functions.
+avoid-breaking-exported-api = false
+
+cognitive-complexity-threshold = 15
+too-many-arguments-threshold = 5
+
+# edition 2024 baseline (Rust 1.85+).
+msrv = "1.85.0"

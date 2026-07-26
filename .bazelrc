@@ -22,6 +22,17 @@ build:clippy --output_groups=clippy_checks
 build:clippy --@rules_rust//:clippy_flags=-Dwarnings
 build:clippy --@rules_rust//:clippy.toml=//:clippy.toml
 
+# Advisory (non-fatal) strict lint pass — run: bazel build --config=clippy-strict //...
+# Surfaces clippy::pedantic and clippy::nursery findings as WARNINGS. No
+# -Dwarnings here, so it never fails the build; it is informational feedback on
+# top of the enforced config:clippy gate. clippy_flags is a non-repeatable
+# string_list, so multiple flags are comma-separated (a second assignment would
+# replace, not append).
+build:clippy-strict --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build:clippy-strict --output_groups=clippy_checks
+build:clippy-strict --@rules_rust//:clippy_flags=-Wclippy::pedantic,-Wclippy::nursery
+build:clippy-strict --@rules_rust//:clippy.toml=//:clippy.toml
+
 # rustfmt config is global (NOT under config:rustfmt) so the format CHECK
 # (bazel build --config=rustfmt) and the in-place FORMATTER
 # (bazel run @rules_rust//:rustfmt) bake the SAME rustfmt.toml. Scoped to
