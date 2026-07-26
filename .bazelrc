@@ -72,6 +72,14 @@ common:remote --platforms=@toolchains_buildbuddy//platforms:linux_x86_64
 # @bazel_tools ijar/zipper) resolve on the linux exec platform.
 common:remote --extra_toolchains=@toolchains_buildbuddy//toolchains/cc:ubuntu_gcc_x86_64
 
+# The BuildBuddy linux CC toolchain hardcodes `-fuse-ld=gold` in its link_flags,
+# so rules_rust links via GNU gold and rustc (>=1.79) warns that gold is
+# deprecated. Append `-fuse-ld=bfd` as the last linker arg (last -fuse-ld wins in
+# gcc) to link with GNU ld instead. Remote-only, so local darwin (Apple ld) is
+# untouched. lld is NOT in the default RE image, so bfd is the safe choice.
+common:remote --@rules_rust//:extra_rustc_flag=-Clink-arg=-fuse-ld=bfd
+common:remote --@rules_rust//:extra_exec_rustc_flag=-Clink-arg=-fuse-ld=bfd
+
 # Remote cache only (CAS) WITHOUT remote execution: actions run locally but read/
 # write the shared cache. Useful offline-tolerant speedup. Enable with
 # --config=remote-cache.
