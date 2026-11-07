@@ -23,10 +23,8 @@ impl Solution {
                 current_window.push_back(n);
                 current_counts.entry(n).and_modify(|counter| *counter += 1);
 
-                let zero_count =
-                    current_counts.get(&0).expect("0 should be here");
-                let one_count =
-                    current_counts.get(&1).expect("1 should be here");
+                let zero_count = Solution::cnt(&current_counts, 0);
+                let one_count = Solution::cnt(&current_counts, 1);
 
                 if zero_count == one_count {
                     max_len =
@@ -38,10 +36,8 @@ impl Solution {
                     let n =
                         current_window.pop_front().expect("pop_front errored");
                     current_counts.entry(n).and_modify(|counter| *counter -= 1);
-                    let zero_count =
-                        current_counts.get(&0).expect("0 should be here");
-                    let one_count =
-                        current_counts.get(&1).expect("1 should be here");
+                    let zero_count = Solution::cnt(&current_counts, 0);
+                    let one_count = Solution::cnt(&current_counts, 1);
 
                     if zero_count == one_count {
                         max_len =
@@ -53,6 +49,10 @@ impl Solution {
         }
 
         max_len
+    }
+
+    fn cnt(m: &HashMap<i32, usize>, n: i32) -> usize {
+        *m.get(&n).expect(&format!("{n} should be here"))
     }
 
     fn max(a: i32, b: i32) -> i32 {
