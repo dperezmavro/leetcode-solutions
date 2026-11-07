@@ -1,0 +1,15 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "contiguous-array",
+    srcs = ["src/lib.rs"],
+    edition = "2024",
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "contiguous-array_test",
+    size = "small",
+    crate = ":contiguous-array",
+    edition = "2024",
+)
