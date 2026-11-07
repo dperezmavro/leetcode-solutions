@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-struct Solution {}
+pub struct Solution {}
 
 impl Solution {
     pub fn intersection(nums: Vec<Vec<i32>>) -> Vec<i32> {
@@ -16,7 +16,7 @@ impl Solution {
             .iter()
             .filter(|e| *e.1 == target_count)
             .map(|e| *e.0)
-            .collect::<Vec<i32>>();
+            .collect();
 
         res.sort();
         res
