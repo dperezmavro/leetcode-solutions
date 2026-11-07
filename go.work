@@ -7,7 +7,7 @@ use (
 	./easy/013-roman-to-integer/go
 	./easy/026-remove-duplicates-from-sorted-array/go
 	./easy/141-linked-list-cycle/go
-	./easy/242-valid-anagram/go
+	./easy/242-Valid-Anagram/go
 	./easy/346-moving-average-from-data-stream/go
 	./easy/703-kth-largest-element-in-a-stream
 	./hard/0004-median-of-two-sorted-arrays/go
