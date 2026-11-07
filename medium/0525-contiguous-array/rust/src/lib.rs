@@ -8,57 +8,22 @@ impl Solution {
             return 0;
         }
 
-        let mut left = 0;
-        let mut right = 0;
         let mut max_len: i32 = 0;
-        let mut window: VecDeque<i32> = VecDeque::new();
-        let mut counts: HashMap<i32, usize> = HashMap::with_capacity(2);
-        counts.insert(0, 0);
-        counts.insert(1, 0);
+        let mut diff: i32 = 0;
+        let mut diffs: HashMap<i32, i32> = HashMap::with_capacity(nums.len());
+        diffs.insert(0, -1);
 
-        while right < nums.len() || left < right {
-            if right < nums.len() {
-                let n = nums[right];
+        for (i, &n) in nums.iter().enumerate() {
+            diff += if n == 1 { 1 } else { -1 };
 
-                window.push_back(n);
-                counts.entry(n).and_modify(|counter| *counter += 1);
-
-                let zero_count = Solution::cnt(&counts, 0);
-                let one_count = Solution::cnt(&counts, 1);
-
-                if zero_count == one_count {
-                    max_len = Solution::max(max_len, window.len() as i32);
-                }
-                right += 1;
-            } else if left < right {
-                println!("ELSE");
-                while left < right {
-                    println!("WHILE");
-                    let n = window.pop_front().expect("pop_front errored");
-                    counts.entry(n).and_modify(|counter| *counter -= 1);
-                    let zero_count = Solution::cnt(&counts, 0);
-                    let one_count = Solution::cnt(&counts, 1);
-
-                    if zero_count == one_count {
-                        max_len = Solution::max(max_len, window.len() as i32);
-                    }
-                    left += 1;
-                }
+            if let Some(&prev_idx) = diffs.get(&diff) {
+                max_len = max_len.max(i as i32 - prev_idx);
+            } else {
+                diffs.insert(diff, i as i32);
             }
         }
 
         max_len
-    }
-
-    fn cnt(m: &HashMap<i32, usize>, n: i32) -> usize {
-        *m.get(&n).expect(&format!("{n} should be here"))
-    }
-
-    fn max(a: i32, b: i32) -> i32 {
-        if a > b {
-            return a;
-        }
-        b
     }
 }
 
