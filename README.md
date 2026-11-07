@@ -6,3 +6,9 @@ Solutions exist in the following languages:
 - Go
 - Rust
 - Python
+
+# Building
+
+This repo primarily relies on `bazel` for building and running tests. A number of pre-configured actions can be found in the `Makefile`.
+
+This repository also supports Bazel RBE, with BuildBuddy as the backend for remote execution.
