@@ -35,9 +35,9 @@ go_sdk.download(version = "1.26.4")
 # darwin SDK for the remote exec platform and the `go` binary fails on the
 # Linux worker with "Exec format error".
 go_sdk.download(
-    version = "1.26.4",
     goarch = "amd64",
     goos = "linux",
+    version = "1.26.4",
 )
 
 # Register the root //:nogo target so `go vet` analyzers run at build time.
