@@ -1,0 +1,15 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "intersection-of-multiple-arrays",
+    srcs = ["src/lib.rs"],
+    edition = "2024",
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "intersection-of-multiple-arrays_test",
+    size = "small",
+    crate = ":intersection-of-multiple-arrays",
+    edition = "2024",
+)
